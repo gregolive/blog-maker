@@ -1,0 +1,82 @@
+.navbar {
+  display: grid;
+  align-items: center;
+  grid-template-columns: repeat(2, 1fr);
+  line-height: 3rem;
+  padding: 0.5rem 2rem;
+  border-bottom: 1px solid black;
+}
+
+.navbar-title {
+  font-family: 'Fira Code', monospace;
+  color: var(--primary-color);
+  font-size: 1.75rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  justify-self: start;
+  transition: text-shadow 0.18s ease-in-out;
+}
+
+.navbar-title:hover {
+  text-shadow: var(--secondary-color) -3px -3px;
+}
+
+.navbar-title > img {
+  height: 2.75rem;
+}
+
+.navbar-menu {
+  justify-self: end;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  column-gap: 1.5rem;
+}
+
+.navbar-link {
+  transition: all 0.25s ease-in-out;
+}
+
+.navbar-link:hover {
+  color: var(--primary-color);
+  text-shadow: var(--primary-color) 0 0 10px;
+}
+
+.navbar-burger {
+  justify-self: end;
+  display: none;
+}
+
+/* MEDIA QUERIES */
+
+@media screen and (max-width: 768px) {
+  .navbar-menu {
+    grid-template-columns: auto;
+    grid-column: 1 / -1;
+    justify-self: center;
+    overflow: hidden;
+  }
+
+  .navbar-menu.open {
+    max-height: 10rem;
+    visibility: visible;
+    transition: max-height 0.25s ease-in;
+  }
+  
+  .navbar-menu.close {
+    max-height: 0;
+    visibility: hidden;
+    transition: max-height 0.15s ease-out;
+  }
+
+  .navbar-item {
+    width: 100%;
+    grid-column: 1 / -1;
+    text-align: center;
+  }
+
+  .navbar-burger {
+    display: block;
+  }
+}
