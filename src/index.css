@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
+:root {
+  --primary-color: #fc573c;
+  --secondary-color: #fee5e1;
+}
+
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;
@@ -7,7 +12,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-:root {
-  --primary-color: #fc573c;
-  --secondary-color: #fee5e1;
+body > * {
+  box-sizing: border-box;
 }

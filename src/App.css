@@ -1,5 +1,5 @@
 a {
-  color: inherit;
+  color: var(--primary-color);
   text-decoration: none;
 }
 
@@ -7,4 +7,17 @@ button {
   background: transparent;
   border: none;
   cursor: pointer;
+}
+
+main {
+  padding: 0.5rem 2rem;
+  min-height: calc(100vh - 5rem);
+}
+
+.inline-link {
+  font-weight: 500;
+}
+
+.inline-link:hover {
+  text-decoration: underline;
 }
