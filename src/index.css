@@ -3,6 +3,7 @@
 :root {
   --primary-color: #fc573c;
   --secondary-color: #fee5e1;
+  --border-color: #eee;
 }
 
 body {
@@ -14,4 +15,22 @@ body {
 
 body > * {
   box-sizing: border-box;
+}
+
+/* CUSTOM SCROLLBAR */
+
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--secondary-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #030150;
 }

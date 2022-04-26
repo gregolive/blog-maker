@@ -24,7 +24,7 @@ footer {
 }
 
 .footer-btns {
-  width: 60%;
+  width: 80%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -41,7 +41,7 @@ footer {
 
 .footer-links {
   font-size: 0.95rem;
-  width: 60%;
+  width: 80%;
   display: grid;
   gap: 0.2rem;
 }
@@ -61,10 +61,4 @@ footer {
 footer small {
   font-size: 1rem;
   font-weight: 200;
-}
-
-@media screen and (max-width: 768px) {
-  .footer-btns, .footer-links {
-    width: 80%;
-  }
 }
