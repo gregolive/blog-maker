@@ -1,14 +1,17 @@
 import { Link } from 'react-router-dom';
 import './Home.css';
+import Doodle from '../../img/Doodle.png';
 
 const Home = () => {
   return (
-    <main>
-      <h1>Welcome to bitblog</h1>
+    <main className='Home'>
+        <div className='BannerText'>
+          <h1>Welcome to <span className='BitBlog'>bitblog</span></h1>
+          <p>Create your own blog and share your story with the world!</p>
+          <Link to='/register' className='Btn PrimaryBtn'>Start now</Link>
+        </div>
 
-      <p>
-        You don't have any blog posts. <Link to='/post/new' className='InlineLink'>Create one now!</Link>
-      </p>
+        <img src={Doodle} alt='lady jumping doodle' className='BannerImg' />
     </main>
   );
 };
