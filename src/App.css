@@ -13,7 +13,8 @@ a {
 
 main {
   padding: 3rem 2rem;
-  min-height: calc(100vh - 5rem);
+  min-height: calc(100vh - 4rem);
+  box-sizing: border-box;
 }
 
 h1 {
@@ -35,9 +36,9 @@ fieldset {
 }
 
 label {
-  color: var(--primary-color);
   font-size: 1.2rem;
   font-weight: 500;
+  position: relative;
 }
 
 input, textarea, select {
@@ -59,6 +60,13 @@ input:focus, textarea:focus, select:focus {
 
 select {
   font-size: 1rem;
+}
+
+.required-field:after {
+  content:"*";
+  color: var(--primary-color);
+  font-size: 0.9rem;
+  position: absolute;
 }
 
 .dynamic-input {
@@ -110,5 +118,11 @@ button {
 @media screen and (max-width: 1024px) {
   .dynamic-input {
     width: auto;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  main {
+    padding: 3rem 1rem;
   }
 }
