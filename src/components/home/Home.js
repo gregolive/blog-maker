@@ -5,13 +5,13 @@ import Doodle from '../../img/Doodle.png';
 const Home = () => {
   return (
     <main className='Home'>
-        <div className='BannerText'>
-          <h1>Welcome to <span className='BitBlog'>bitblog</span></h1>
-          <p>Create your own blog and share your story with the world!</p>
-          <Link to='/register' className='Btn PrimaryBtn'>Start now</Link>
-        </div>
+      <div className='BannerText'>
+        <h1>Welcome to <span className='BitBlog'>bitblog</span></h1>
+        <p>Create your own blog and share your story with the world!</p>
+        <Link to='/register' className='Btn PrimaryBtn'>Start now</Link>
+      </div>
 
-        <img src={Doodle} alt='lady jumping doodle' className='BannerImg' />
+      <img src={Doodle} alt='lady jumping doodle' className='BannerImg' />
     </main>
   );
 };

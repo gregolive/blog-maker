@@ -1,8 +1,11 @@
 import { Link } from 'react-router-dom';
 import './Footer.css';
+import { useAuth } from '../../helpers/Auth';
 import logo from '../../img/logo.png';
 
 const Footer = () => {
+  const { token } = useAuth();
+
   return (
     <footer>
       <div className='FooterBtns'>
@@ -15,11 +18,19 @@ const Footer = () => {
         </a>
       </div>
 
-      <div className='FooterLinks'>
-        <Link to='/'>New Blog Post</Link>
-        <Link to='/'>Your Blog</Link>
-        <Link to='/'>Account</Link>
-      </div>
+      {(token) ? (
+        <div className='FooterLinks'>
+          <Link to='/post/new'>New Blog Post</Link>
+          <Link to='/dashboard'>Your Blog</Link>
+          <Link to='/'>Account</Link>
+        </div>
+      ) : (
+        <div className='FooterLinks'>
+          <Link to='/'>Home</Link>
+          <Link to='/register'>Register</Link>
+          <Link to='/login'>Log in</Link>
+        </div>
+      )}
 
       <small>&copy;gregolive</small>
     </footer>

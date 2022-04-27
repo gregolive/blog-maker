@@ -1,0 +1,10 @@
+.AuthSection {
+  width: 45rem;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 768px) {
+  .AuthSection {
+    width: 100%;
+  }
+}
