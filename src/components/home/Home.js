@@ -7,7 +7,7 @@ const Home = () => {
       <h1>Welcome to bitblog</h1>
 
       <p>
-        You don't have any blog posts. <Link to='/post/new' className='inline-link'>Create one now!</Link>
+        You don't have any blog posts. <Link to='/post/new' className='InlineLink'>Create one now!</Link>
       </p>
     </main>
   );

@@ -8,7 +8,7 @@ footer {
   gap: 0.75rem;
 }
 
-.footer-title {
+.FooterTitle {
   font-family: 'Fira Code', monospace;
   color: var(--secondary-color);
   font-size: 1.25rem;
@@ -19,34 +19,34 @@ footer {
   transition: all 0.18s ease-in-out;
 }
 
-.footer-title:hover {
+.FooterTitle:hover {
   color: white;
 }
 
-.footer-btns {
+.FooterBtns {
   width: 80%;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.footer-icon {
+.FooterIcon {
   height: 30px;
   width: auto;
 }
 
-.github-icon {
+.GithubIcon {
   color:white
 }
 
-.footer-links {
+.FooterLinks {
   font-size: 0.95rem;
   width: 80%;
   display: grid;
   gap: 0.2rem;
 }
 
-.footer-links > a {
+.FooterLinks > a {
   color: white;
   border-radius: 0.3rem;
   padding: 0.2rem 0.4rem;
@@ -54,7 +54,7 @@ footer {
   transition: all 0.2s ease;
 }
 
-.footer-links > a:hover {
+.FooterLinks > a:hover {
   background: rgba(255, 255, 255, 0.15)
 }
 

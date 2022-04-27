@@ -3,11 +3,11 @@ a {
   text-decoration: none;
 }
 
-.inline-link {
+.InlineLink {
   font-weight: 500;
 }
 
-.inline-link:hover {
+.InlineLink:hover {
   text-decoration: underline;
 }
 
@@ -62,14 +62,14 @@ select {
   font-size: 1rem;
 }
 
-.required-field:after {
+.RequiredField:after {
   content:"*";
   color: var(--primary-color);
   font-size: 0.9rem;
   position: absolute;
 }
 
-.dynamic-input {
+.DynamicInput {
   width: max(50%, 40rem);
 }
 
@@ -80,43 +80,43 @@ button {
   cursor: pointer;
 }
 
-.btn {
+.Btn {
   font-size: 1.1rem;
   border-radius: 0.3rem;
   padding: 0.4rem 0.7rem;
   transition: all 0.3s ease;
 }
 
-.primary-btn {
+.PrimaryBtn {
   background: var(--primary-color);
   color: white;
   font-weight: 500;
 }
 
-.primary-btn:hover {
+.PrimaryBtn:hover {
   background: var(--secondary-color);
   color: var(--primary-color);
   box-shadow: -3px -3px 0 var(--primary-color);
 }
 
-.secondary-btn {
+.SecondaryBtn {
   background: var(--border-color);
   color: black;
 }
 
-.secondary-btn:hover {
+.SecondaryBtn:hover {
   background: #c2c2c2;
   color: white;
   box-shadow: -4px -4px 0 var(--border-color);
 }
 
-.button-group {
+.ButtonGroup {
   display: flex;
   gap: 0.75rem;
 }
 
 @media screen and (max-width: 1024px) {
-  .dynamic-input {
+  .DynamicInput {
     width: auto;
   }
 }
