@@ -1,7 +1,7 @@
 .Navbar {
-  display: grid;
+  display: flex;
   align-items: center;
-  grid-template-columns: repeat(2, 1fr);
+  justify-content: space-between;
   line-height: 3rem;
   padding: 0.5rem 2rem;
   border-bottom: 1px solid black;
@@ -29,13 +29,14 @@
 
 .NavbarMenu {
   justify-self: end;
-  display: grid;
-  grid-template-columns: repeat(3, auto);
+  display: flex;
   column-gap: 1.5rem;
 }
 
 .NavbarLink {
   color: black;
+  font-size: 1rem;
+  padding: 0;
   transition: all 0.25s ease-in-out;
 }
 
@@ -52,7 +53,13 @@
 /* MEDIA QUERIES */
 
 @media screen and (max-width: 768px) {
+  .Navbar {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   .NavbarMenu {
+    display: grid;
     grid-template-columns: auto;
     grid-column: 1 / -1;
     justify-self: center;
@@ -60,7 +67,7 @@
   }
 
   .NavbarMenu.Open {
-    max-height: 10rem;
+    max-height: 20rem;
     visibility: visible;
     transition: max-height 0.25s ease-in;
   }
@@ -71,7 +78,7 @@
     transition: max-height 0.15s ease-out;
   }
 
-  .NavbarItem {
+  .NavbarLink {
     width: 100%;
     grid-column: 1 / -1;
     text-align: center;
