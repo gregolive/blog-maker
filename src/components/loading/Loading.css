@@ -1,0 +1,27 @@
+.Loading {
+  height: calc(100vh - 4rem - 1px);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.LoadingImg {
+  height: calc(8rem + 4vw);
+  width: auto;
+  animation: blink 0.7s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes blink {
+  0% {
+      opacity: 1;
+  }
+  50% {
+      opacity: 0.4;
+  }
+  100% {
+      opacity: 1;
+  }
+}

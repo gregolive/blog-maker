@@ -1,0 +1,14 @@
+.Post {
+  width: 100%;
+  display: grid;
+  justify-items: center;
+}
+
+.PostTitle {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.PostBody {
+  justify-self: start;
+}

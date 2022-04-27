@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Editor } from '@tinymce/tinymce-react';
 import axios from 'axios';
-import './PostForm.css';
+import './Post.css';
 
 const PostForm = () => {
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ const PostForm = () => {
       preview,
       visibility,
     }).then((res) => {
-      navigate(`/post/${res.data}`);
+      navigate(`/post/${res.data.url}`, { state: res.data.post });
     }, (err) => {
       console.log(err);
     });
