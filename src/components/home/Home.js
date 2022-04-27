@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import './Home.css';
-import Doodle from '../../img/Doodle.png';
+import Doodle from '../../img/FloatDoodle.png';
 
 const Home = () => {
   return (
@@ -11,7 +11,7 @@ const Home = () => {
         <Link to='/register' className='Btn PrimaryBtn'>Start now</Link>
       </div>
 
-      <img src={Doodle} alt='lady jumping doodle' className='BannerImg' />
+      <img src={Doodle} alt='float doodle' className='BannerImg' />
     </main>
   );
 };
