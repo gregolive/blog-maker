@@ -9,10 +9,9 @@ const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
+  const formSubmit = () => {
     const apiURL = 'http://localhost:3001/api/v1/login';
+
     axios.post(apiURL, {
       username,
       password,
@@ -21,6 +20,11 @@ const Login = () => {
     }, (err) => {
       console.log(err);
     });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    formSubmit();
   };
 
   return (

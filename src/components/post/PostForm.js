@@ -11,10 +11,9 @@ const PostForm = () => {
   const [preview, setPreview] = useState('');
   const [visibility, setVisibility] = useState('Visible');
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
+  const formSubmit = () => {
     const apiURL = 'http://localhost:3001/api/v1/post/create';
+
     axios.post(apiURL, {
       title,
       content,
@@ -25,6 +24,11 @@ const PostForm = () => {
     }, (err) => {
       console.log(err);
     });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    formSubmit();
   };
 
   return (

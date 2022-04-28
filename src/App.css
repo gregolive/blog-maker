@@ -45,16 +45,15 @@ input, textarea, select {
   font-family: 'Inter', sans-serif;
   font-size: 1.1rem;
   background: var(--border-color);
-  border: 2px solid var(--border-color);
+  border: none;
   border-radius: 0.4rem;
-  padding: 0.3rem 0.5rem;
+  padding: 0.4rem;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
 }
 
 input:focus, textarea:focus, select:focus {
-  border: 2px solid var(--secondary-color);
   box-shadow: 0 0 0.14rem var(--primary-color);
   outline: none;
 }
@@ -72,6 +71,25 @@ select {
 
 .DynamicInput {
   width: max(50%, 40rem);
+}
+
+.InvalidInput {
+  background: rgba(250, 0, 63, 0.1);
+}
+
+.InvalidInput:focus {
+  box-shadow: 0 0 0.14rem var(--danger);
+}
+
+.Error {
+  color: var(--danger);
+  font-size: 0.85rem;
+  margin: 0;
+  display: block;
+}
+
+.Error.Hidden {
+  display: none;
 }
 
 button {

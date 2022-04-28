@@ -3,26 +3,28 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Auth.css';
 import Doodle from '../../img/MessyDoodle.png';
+import InputWithValidator from '../../helpers/Validate';
 
 const Register = () => {
   const navigate = useNavigate();
-  const [username, setUsername] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [formData, setFormData] = useState({
+    username: '',
+    first_name: '',
+    last_name: '',
+    email: '',
+    password: '',
+    password_confirm: '',
+  });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
+  const formSubmit = () => {
     const apiURL = 'http://localhost:3001/api/v1/user/create';
+
     axios.post(apiURL, {
-      username,
-      firstName,
-      lastName,
-      email,
-      password,
+      username: formData.username,
+      first_name: formData.first_name,
+      last_name: formData.last_name,
+      email: formData.email,
+      password: formData.password,
     }).then((res) => {
       navigate('/dashboard', { state: res.data.post });
     }, (err) => {
@@ -30,41 +32,84 @@ const Register = () => {
     });
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    formSubmit();
+  };
+
+  const handleChange = (e) => setFormData({...formData, [e.target.name]: e.target.value});
+
   return (
     <main className='AuthSection'>
       <div className='AuthForm'>
         <h1>Create an account</h1>
 
         <form onSubmit={(e) => handleSubmit(e)}>
-          <fieldset>
-            <label htmlFor='username' className='RequiredField'>Username</label>
-            <input type='text' name='username' id='username' minLength='5' maxLength='40' value={username} onChange={(e) => setUsername(e.target.value)} />
-          </fieldset>
+          <InputWithValidator
+            required={true}
+            labelText='Username'
+            inputProps={{ type:'text', minLength:'5', maxLength:'40', pattern:'[a-zA-Z0-9_-]+' }}
+            id='username'  
+            checks={['tooShort', 'patternMismatch']}
+            errorMessage='Username must be at least 5 characters long and contain no special characters'
+            value={formData.username} 
+            onChange={(e) => handleChange(e)}
+          />
 
-          <fieldset>
-            <label htmlFor='first_name' className='RequiredField'>First name</label>
-            <input type='text' name='first_name' id='first_name' maxLength='100' value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-          </fieldset>
+          <InputWithValidator
+            required={true}
+            labelText='First name'
+            inputProps={{ type:'text', pattern:'[a-zA-Z- ]+' }}
+            id='first_name'  
+            checks={['valueMissing', 'patternMismatch']}
+            errorMessage='First name cannot contain numbers or special characters'
+            value={formData.first_name} 
+            onChange={(e) => handleChange(e)}
+          />
 
-          <fieldset>
-            <label htmlFor='last_name' className='RequiredField'>Last name</label>
-            <input type='text' name='last_name' id='last_name' maxLength='100' value={lastName} onChange={(e) => setLastName(e.target.value)} />
-          </fieldset> 
+          <InputWithValidator
+            required={true}
+            labelText='Last name'
+            inputProps={{ type:'text', pattern:'[a-zA-Z- ]+' }}
+            id='last_name'  
+            checks={['valueMissing', 'patternMismatch']}
+            errorMessage='Last name cannot contain numbers or special characters'
+            value={formData.last_name} 
+            onChange={(e) => handleChange(e)}
+          />
 
-          <fieldset>
-            <label htmlFor='email' className='RequiredField'>Email</label>
-            <input type='email' name='email' id='email' minLength='5' maxLength='40' value={email} onChange={(e) => setEmail(e.target.value)} />
-          </fieldset>
+          <InputWithValidator
+            required={true}
+            labelText='Email'
+            inputProps={{ type:'email' }}
+            id='email'  
+            checks={['valueMissing', 'typeMismatch']}
+            errorMessage='Must be a valid email address'
+            value={formData.email} 
+            onChange={(e) => handleChange(e)}
+          />
 
-          <fieldset>
-            <label htmlFor='password' className='RequiredField'>Password</label>
-            <input type='password' name='password' id='password' autoComplete='on' minLength='6' value={password} onChange={(e) => setPassword(e.target.value)} />
-          </fieldset>
+          <InputWithValidator
+            required={true}
+            labelText='Password'
+            inputProps={{ type:'password', autoComplete:'on', minLength:'6', pattern:'(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{6,}' }}
+            id='password'  
+            checks={['tooShort', 'patternMismatch']}
+            errorMessage='Password must be at least than 6 characters long and contain an uppercase letter, number, and special character'
+            value={formData.password} 
+            onChange={(e) => handleChange(e)}
+          />
 
-          <fieldset>
-            <label htmlFor='password_confirm' className='RequiredField'>Confirm Password</label>
-            <input type='password' name='password_confirm' id='password_confirm' autoComplete='on' minLength='6' value={passwordConfirm} onChange={(e) => setPasswordConfirm(e.target.value)} />
-          </fieldset>
+          <InputWithValidator
+            required={true}
+            labelText='Password Confirmation'
+            inputProps={{ type:'password', autoComplete:'on', pattern:`${formData.password}` }}
+            id='password_confirm'  
+            checks={['valueMissing', 'patternMismatch']}
+            errorMessage='Passwords must match'
+            value={formData.password_confirm} 
+            onChange={(e) => handleChange(e)}
+          />
 
           <div className='ButtonGroup'>
             <button className='Btn PrimaryBtn'>Submit</button>
