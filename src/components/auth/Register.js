@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Auth.css';
@@ -15,6 +15,8 @@ const Register = () => {
     password: '',
     password_confirm: '',
   });
+  const [submitError, setSubmitError] = useState(false);
+  const [serverErrors, setServerErrors] = useState({});
 
   const formSubmit = () => {
     const apiURL = 'http://localhost:3001/api/v1/user/create';
@@ -26,18 +28,38 @@ const Register = () => {
       email: formData.email,
       password: formData.password,
     }).then((res) => {
-      navigate('/dashboard', { state: res.data.post });
+      navigate('/login', { state: res.data.msg });
     }, (err) => {
-      console.log(err);
+      setServerErrors(err.response.data.errors);
     });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    formSubmit();
+    const validForm = !(Object.values(formData).some((input) => input === ''));
+    if (validForm) {
+      setSubmitError(false);
+      formSubmit();
+    } else {
+      setSubmitError(true);
+    }
   };
 
-  const handleChange = (e) => setFormData({...formData, [e.target.name]: e.target.value});
+  // remove server error msg when user updates field
+  const removeServerError = (inputName) => {
+    if (Object.keys(serverErrors).includes(inputName)) {
+      setServerErrors((prevState) => {
+        const updatedErrors = {...prevState};
+        delete updatedErrors[inputName];
+        return updatedErrors;
+      });
+    }
+  };
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    removeServerError(e.target.name);
+  }
 
   return (
     <main className='AuthSection'>
@@ -54,6 +76,7 @@ const Register = () => {
             errorMessage='Username must be at least 5 characters long and contain no special characters'
             value={formData.username} 
             onChange={(e) => handleChange(e)}
+            serverError={serverErrors['username']}
           />
 
           <InputWithValidator
@@ -65,6 +88,7 @@ const Register = () => {
             errorMessage='First name cannot contain numbers or special characters'
             value={formData.first_name} 
             onChange={(e) => handleChange(e)}
+            serverError={serverErrors['first_name']}
           />
 
           <InputWithValidator
@@ -76,6 +100,7 @@ const Register = () => {
             errorMessage='Last name cannot contain numbers or special characters'
             value={formData.last_name} 
             onChange={(e) => handleChange(e)}
+            serverError={serverErrors['last_name']}
           />
 
           <InputWithValidator
@@ -87,6 +112,7 @@ const Register = () => {
             errorMessage='Must be a valid email address'
             value={formData.email} 
             onChange={(e) => handleChange(e)}
+            serverError={serverErrors['email']}
           />
 
           <InputWithValidator
@@ -98,6 +124,7 @@ const Register = () => {
             errorMessage='Password must be at least than 6 characters long and contain an uppercase letter, number, and special character'
             value={formData.password} 
             onChange={(e) => handleChange(e)}
+            serverError={serverErrors['password']}
           />
 
           <InputWithValidator
@@ -110,6 +137,8 @@ const Register = () => {
             value={formData.password_confirm} 
             onChange={(e) => handleChange(e)}
           />
+
+          <p className={(submitError) ? 'Error' : 'Error Hidden'}>Please complete required fields</p>
 
           <div className='ButtonGroup'>
             <button className='Btn PrimaryBtn'>Submit</button>

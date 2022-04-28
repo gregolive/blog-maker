@@ -46,6 +46,7 @@
 }
 
 .NavbarBurger {
+  padding: 0;
   justify-self: end;
   display: none;
 }

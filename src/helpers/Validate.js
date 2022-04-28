@@ -9,6 +9,7 @@ const InputWithValidator = ({
   errorMessage,
   value,
   onChange,
+  serverError,
 }) => {
   const [isValid, setIsValid] = useState(true);
 
@@ -21,8 +22,9 @@ const InputWithValidator = ({
   return (
     <fieldset>
       <label htmlFor={id} className={(required) ? 'RequiredField' : ''}>{labelText}</label>
-      <input id={id} name={id} {...inputProps} onBlur={checkValidity} value={value} onChange={onChange} className={isValid ? '' : 'InvalidInput'}/>
+      <input id={id} name={id} {...inputProps} onBlur={checkValidity} value={value} onChange={onChange} className={(!isValid || serverError) ? 'InvalidInput' : ''}/>
       <p className={(isValid) ? 'Error Hidden' : 'Error'}>{errorMessage}</p>
+      <p className={(!serverError) ? 'Error Hidden' : 'Error'}>{(serverError) ? serverError.msg : null}</p>
     </fieldset>
   );
 };
