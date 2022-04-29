@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import './Auth.css';
 import Doodle from '../../img/MessyDoodle.png';
@@ -144,6 +144,8 @@ const Register = () => {
             <button className='Btn PrimaryBtn'>Submit</button>
           </div>
         </form>
+
+        <p>Already have an account? <Link to='/login' className='InlineLink'>Log in</Link></p>
       </div>
 
       <img src={Doodle} alt='messy doodle' className='AuthDoodle' />

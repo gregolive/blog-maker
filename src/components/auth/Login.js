@@ -1,16 +1,17 @@
 import { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import axios from 'axios';
+import { useLocation, Link } from 'react-router-dom';
 import './Auth.css';
+import { useAuth } from '../../helpers/Auth';
 import Doodle from '../../img/GroovySittingDoodle.png';
 
 const Login = () => {
-  const navigate = useNavigate();
+  const { onLogin } = useAuth();
   const welcomeMsg = useLocation();
   const [showMsg, setShowMsg] = useState(true);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  /*
   const formSubmit = () => {
     const apiURL = 'http://localhost:3001/api/v1/login';
 
@@ -18,15 +19,16 @@ const Login = () => {
       username,
       password,
     }).then((res) => {
-      navigate(`/post/${res.data.url}`, { state: res.data.post });
+      navigate('/dashboard', { state: res.data.post });
     }, (err) => {
       console.log(err);
     });
   };
+  */
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    formSubmit();
+    onLogin(username, password);
   };
 
   return (
@@ -59,6 +61,8 @@ const Login = () => {
               <button className='Btn PrimaryBtn'>Submit</button>
             </div>
           </form>
+
+          <p>Don't have an account? <Link to='/register' className='InlineLink'>Register</Link></p>
         </div>
 
         <img src={Doodle} alt='groovy sitting doodle' className='AuthDoodle' />

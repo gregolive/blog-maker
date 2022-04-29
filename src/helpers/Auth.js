@@ -1,21 +1,27 @@
 import { useState, createContext, useContext } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
-
-const fakeAuth = () => {
-  new Promise((resolve) => {
-    setTimeout(() => resolve('2342f2f1d131rf12'), 250);
-  });
-};
+import axios from 'axios';
 
 const AuthContext = createContext(null);
+
+const authRequest = async (username, password) => {
+  const apiURL = 'http://localhost:3001/api/v1/login';
+
+  const res = await axios.post(apiURL, {
+    username,
+    password,
+  });
+  return res.data.token;
+};
 
 const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const [token, setToken] = useState(null);
 
-  const handleLogin = async () => {
-    const token = await fakeAuth();
-    setToken(token);
+  const handleLogin = async (username, password) => {
+    const apiToken = await authRequest(username, password);
+    console.log(typeof apiToken)
+    setToken(apiToken);
     navigate('/dashboard');
   };
 
