@@ -2,33 +2,27 @@ import { useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import './Auth.css';
 import { useAuth } from '../../helpers/Auth';
+import InputWithValidator from '../../helpers/Validate';
 import Doodle from '../../img/GroovySittingDoodle.png';
 
 const Login = () => {
-  const { onLogin } = useAuth();
+  const { authError, onLogin } = useAuth();
   const welcomeMsg = useLocation();
   const [showMsg, setShowMsg] = useState(true);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
-  /*
-  const formSubmit = () => {
-    const apiURL = 'http://localhost:3001/api/v1/login';
-
-    axios.post(apiURL, {
-      username,
-      password,
-    }).then((res) => {
-      navigate('/dashboard', { state: res.data.post });
-    }, (err) => {
-      console.log(err);
-    });
-  };
-  */
+  const [submitError, setSubmitError] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onLogin(username, password);
+
+    const validForm = (username.length >= 5 && password.length >= 6);
+    if (validForm) {
+      setSubmitError(false);
+      onLogin(username, password);
+    } else {
+      setSubmitError(true);
+    }
   };
 
   return (
@@ -46,16 +40,31 @@ const Login = () => {
         <div className='AuthForm'>
           <h1>Log in</h1>
 
-          <form onSubmit={(e) => handleSubmit(e)}>
-            <fieldset>
-              <label htmlFor='username' className='RequiredField'>Username</label>
-              <input type='text' name='username' id='username' minLength='5' maxLength='40' value={username} onChange={(e) => setUsername(e.target.value)} />
-            </fieldset>
+          <form onSubmit={(e) => handleSubmit(e)} noValidate>
+            <InputWithValidator
+              required={true}
+              labelText='Username'
+              inputProps={{ type:'text', minLength:'5', pattern:'[a-zA-Z0-9_-]+' }}
+              id='username'  
+              checks={['tooShort', 'patternMismatch']}
+              errorMessage='Username must be at least 5 characters long and contain no special characters'
+              value={username} 
+              onChange={(e) => {setUsername(e.target.value); setSubmitError(false); }}
+            />
 
-            <fieldset>
-              <label htmlFor='password' className='RequiredField'>Password</label>
-              <input type='password' name='password' id='password' autoComplete='on' minLength='6' value={password} onChange={(e) => setPassword(e.target.value)} />
-            </fieldset>
+            <InputWithValidator
+              required={true}
+              labelText='Password'
+              inputProps={{ type:'password', autoComplete:'on', minLength:'6', pattern:'(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{6,}' }}
+              id='password'  
+              checks={['tooShort', 'patternMismatch']}
+              errorMessage='Password must be at least than 6 characters long and contain an uppercase letter, number, and special character'
+              value={password} 
+              onChange={(e) => { setPassword(e.target.value); setSubmitError(false); }}
+            />
+
+            <p className={(authError && !submitError) ? 'Error' : 'Error Hidden'}>{authError}</p>
+            <p className={(submitError) ? 'Error' : 'Error Hidden'}>Please complete required fields</p>
 
             <div className='ButtonGroup'>
               <button className='Btn PrimaryBtn'>Submit</button>

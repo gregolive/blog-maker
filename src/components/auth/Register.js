@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import './Auth.css';
-import Doodle from '../../img/MessyDoodle.png';
 import InputWithValidator from '../../helpers/Validate';
+import Doodle from '../../img/MessyDoodle.png';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -66,7 +66,7 @@ const Register = () => {
       <div className='AuthForm'>
         <h1>Create an account</h1>
 
-        <form onSubmit={(e) => handleSubmit(e)}>
+        <form onSubmit={(e) => handleSubmit(e)} noValidate>
           <InputWithValidator
             required={true}
             labelText='Username'

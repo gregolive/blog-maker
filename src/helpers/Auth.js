@@ -4,25 +4,28 @@ import axios from 'axios';
 
 const AuthContext = createContext(null);
 
-const authRequest = async (username, password) => {
-  const apiURL = 'http://localhost:3001/api/v1/login';
-
-  const res = await axios.post(apiURL, {
-    username,
-    password,
-  });
-  return res.data.token;
-};
-
 const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const [token, setToken] = useState(null);
+  const [authError, setAuthError] = useState(null);
+
+  const authRequest = async (username, password) => {
+    const apiURL = 'http://localhost:3001/api/v1/login';
+  
+    axios.post(apiURL, {
+      username,
+      password,
+    }).then((res) => {
+      setToken(res.data.token);
+    }, (err) => {
+      setAuthError(err.response.data.message.message);
+    });
+  };
 
   const handleLogin = async (username, password) => {
-    const apiToken = await authRequest(username, password);
+    await authRequest(username, password);
 
-    setToken(apiToken);
-    navigate('/dashboard');
+    if (!authError) { navigate('/dashboard'); }
   };
 
   const handleLogout = () => {
@@ -31,6 +34,7 @@ const AuthProvider = ({ children }) => {
 
   const value = {
     token,
+    authError,
     onLogin: handleLogin,
     onLogout: handleLogout,
   };
