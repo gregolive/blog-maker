@@ -20,7 +20,7 @@ const AuthProvider = ({ children }) => {
 
   const handleLogin = async (username, password) => {
     const apiToken = await authRequest(username, password);
-    console.log(typeof apiToken)
+
     setToken(apiToken);
     navigate('/dashboard');
   };

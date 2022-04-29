@@ -5,10 +5,16 @@ import { useAuth } from '../../helpers/Auth';
 import logo from '../../img/logo.png';
 
 const Header = () => {
-  const [menu, setMenu] = useState(false);
-  const toggleMenu = () => setMenu(!menu);
   const { token, onLogout } = useAuth();
+  const [menu, setMenu] = useState(false);
 
+  const toggleMenu = () => setMenu(!menu);
+  const closeMenu = () => setMenu(false);
+  const logout = () => {
+    onLogout();
+    closeMenu();
+  };
+  
   return (
     <nav className='Navbar'>
       <Link to='/' className='NavbarTitle'>
@@ -22,15 +28,15 @@ const Header = () => {
 
       {(token) ? (
         <div className={(menu) ? 'NavbarMenu Open' : 'NavbarMenu Close'}>
-          <Link to='/post/new' className='NavbarLink'>New Post</Link>
-          <Link to='/dashboard' className='NavbarLink'>Dashboard</Link>
-          <Link to='/' className='NavbarLink'>Account</Link>
-          <button type='button' onClick={onLogout} className='NavbarLink'>Sign Out</button>
+          <Link to='/post/new' onClick={closeMenu} className='NavbarLink'>New Post</Link>
+          <Link to='/dashboard' onClick={closeMenu} className='NavbarLink'>Dashboard</Link>
+          <Link to='/' onClick={closeMenu} className='NavbarLink'>Account</Link>
+          <button type='button' onClick={logout} className='NavbarLink'>Sign Out</button>
         </div>
       ) : (
         <div className={(menu) ? 'NavbarMenu Open' : 'NavbarMenu Close'}>
-          <Link to='/register' className='NavbarLink'>Register</Link>
-          <Link to='/login' className='NavbarLink'>Log in</Link>
+          <Link to='/register' onClick={closeMenu} className='NavbarLink'>Register</Link>
+          <Link to='/login' onClick={closeMenu} className='NavbarLink'>Log in</Link>
         </div>
       )}
     </nav>
