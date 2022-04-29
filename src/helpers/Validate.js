@@ -24,7 +24,7 @@ const InputWithValidator = ({
       <label htmlFor={id} className={(required) ? 'RequiredField' : ''}>{labelText}</label>
       <input id={id} name={id} {...inputProps} onBlur={checkValidity} value={value} onChange={onChange} className={(!isValid || serverError) ? 'InvalidInput' : ''}/>
       <p className={(isValid) ? 'Error Hidden' : 'Error'}>{errorMessage}</p>
-      <p className={(!serverError) ? 'Error Hidden' : 'Error'}>{(serverError) ? serverError.msg : null}</p>
+      <p className={(serverError && isValid) ? 'Error' : 'Error Hidden'}>{(serverError) ? serverError.msg : null}</p>
     </fieldset>
   );
 };

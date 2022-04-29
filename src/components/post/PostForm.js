@@ -3,9 +3,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Editor } from '@tinymce/tinymce-react';
 import axios from 'axios';
 import './Post.css';
+import { useAuth } from '../../helpers/Auth';
 
 const PostForm = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [preview, setPreview] = useState('');
@@ -17,6 +19,7 @@ const PostForm = () => {
     axios.post(apiURL, {
       title,
       content,
+      author: user.id,
       preview,
       visibility,
     }).then((res) => {
@@ -38,7 +41,7 @@ const PostForm = () => {
       <form onSubmit={(e) => handleSubmit(e)}>
         <fieldset>
           <label htmlFor='title' className='RequiredField'>Title</label>
-          <input type='text' name='title' id='title' className='DynamicInput' maxLength='100' value={title} onChange={(e) => setTitle(e.target.value)} />
+          <input type='text' name='title' id='title' className='DynamicInput PostInput' maxLength='100' value={title} onChange={(e) => setTitle(e.target.value)} />
         </fieldset>
 
         <fieldset>
@@ -62,12 +65,12 @@ const PostForm = () => {
 
         <fieldset>
           <label htmlFor='preview'>Preview</label>
-          <textarea name='preview' id='preview' className='DynamicInput' rows='5' maxLength='200' value={preview} onChange={(e) => setPreview(e.target.value)} />
+          <textarea name='preview' id='preview' className='DynamicInput PostInput' rows='5' maxLength='200' value={preview} onChange={(e) => setPreview(e.target.value)} />
         </fieldset>
 
         <fieldset>
           <label htmlFor='visibility' className='RequiredField'>Visibility</label>
-          <select name='visibility' id='visibility' className='DynamicInput' value={visibility} onChange={(e) => setVisibility(e.target.value)} >
+          <select name='visibility' id='visibility' className='DynamicInput PostInput' value={visibility} onChange={(e) => setVisibility(e.target.value)} >
             <option value="Visible">Visible</option>
             <option value="Hidden">Hidden</option>
           </select>

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useParams, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import parse from 'html-react-parser';
+import { format } from 'date-fns';
 import './Post.css';
 import Loading from '../loading/Loading';
 
@@ -16,9 +17,10 @@ const PostForm = () => {
     if (!postData) {
       const apiURL = `http://localhost:3001/api/v1/post/${postTitle}`;
     
-      axios.get(apiURL)
-        .then(response => response.json())
-        .then(data => setPost(data));
+      axios.get(apiURL).then(
+        (data) => setPost(data),
+        (err) => console.log(err)
+      );
     }
   }, [postData, postTitle]);
 
@@ -27,13 +29,11 @@ const PostForm = () => {
     if (Object.keys(post).length > 0) { setLoading(false); }
   }, [post]);
 
-  console.log(post)
-
   const postDetail = (
     <main>
       <section className='Post'>
         <h1 className='PostTitle'>{post.title}</h1>
-        <small>{post.created_at} · {post.author}</small>
+        <small>{format(post.created_at, 'MMMM dd, yyyy')} · {post.author}</small>
 
         <div className='PostBody'>{parse(parse(post.content))}</div>
       </section>

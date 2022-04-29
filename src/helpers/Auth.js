@@ -1,4 +1,4 @@
-import { useState, createContext, useContext } from 'react';
+import { useState, createContext, useContext, useEffect } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -7,7 +7,13 @@ const AuthContext = createContext(null);
 const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const [token, setToken] = useState(null);
+  const [user, setUser] = useState(null);
   const [authError, setAuthError] = useState(null);
+
+  // navigate when token updates
+  useEffect(() => {
+    navigate('/dashboard'); // eslint-disable-next-line
+  }, [token]);
 
   const authRequest = async (username, password) => {
     const apiURL = 'http://localhost:3001/api/v1/login';
@@ -17,6 +23,7 @@ const AuthProvider = ({ children }) => {
       password,
     }).then((res) => {
       setToken(res.data.token);
+      setUser(res.data.user);
     }, (err) => {
       setAuthError(err.response.data.message.message);
     });
@@ -24,8 +31,6 @@ const AuthProvider = ({ children }) => {
 
   const handleLogin = async (username, password) => {
     await authRequest(username, password);
-
-    if (!authError) { navigate('/dashboard'); }
   };
 
   const handleLogout = () => {
@@ -34,6 +39,7 @@ const AuthProvider = ({ children }) => {
 
   const value = {
     token,
+    user,
     authError,
     onLogin: handleLogin,
     onLogout: handleLogout,

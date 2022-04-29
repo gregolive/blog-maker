@@ -17,10 +17,17 @@ const Header = () => {
   
   return (
     <nav className='Navbar'>
-      <Link to='/' className='NavbarTitle'>
-        <img src={logo} alt='bitblog logo' />
-        <span>bitblog</span>
-      </Link>
+      {(token) ? (
+        <Link to='/dashboard' className='NavbarTitle'>
+          <img src={logo} alt='bitblog logo' />
+          <span>bitblog</span>
+        </Link>
+      ) : (
+        <Link to='/' className='NavbarTitle'>
+          <img src={logo} alt='bitblog logo' />
+          <span>bitblog</span>
+        </Link>
+      )}
 
       <button className='NavbarBurger' onClick={toggleMenu}>
         <svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='24' height='24' viewBox='0 0 24 24'><path d='M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z' /></svg>
