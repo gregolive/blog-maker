@@ -42,6 +42,20 @@ const PostForm = () => {
         <small>{post.author.first_name} {post.author.last_name} · {format(parseISO(post.created_at), 'MMMM dd, yyyy')}</small>
 
         <div className='PostBody'>{parse(parse(post.content))}</div>
+
+        <section className='PostComments'>
+          <h2>Comments <span className='CommentCount'>{comments.length}</span></h2>
+
+          <div className='CommentGrid'>
+            {comments.map((comment) =>
+              <div className='Comment'>
+                <strong>{comment.author.username}</strong>
+                <small>{format(parseISO(comment.created_at), 'MMMM dd, yyyy')}</small>
+                <p>{comment.content}</p>
+              </div>
+            )}
+          </div>
+        </section>
       </section>
     </main>
   </>) : (<Loading />);

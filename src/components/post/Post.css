@@ -17,3 +17,46 @@
 .PostBody {
   justify-self: start;
 }
+
+.PostComments {
+  width: 100%;
+  justify-self: start;
+}
+
+.CommentGrid {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.CommentCount {
+  font-size: 1rem;
+  font-weight: 500;
+  padding-left: 0.25rem;
+}
+
+.Comment {
+  border: 1px solid black;
+  box-shadow: 4px 4px 0 black;
+  padding: 0.4rem 0.6rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.3rem;
+  transition: all 0.3s ease;
+}
+
+.Comment:hover {
+  box-shadow: 2px 2px 0 black;
+}
+
+.Comment > strong {
+  font-weight: 500;
+}
+
+.Comment > small {
+  justify-self: end;
+}
+
+.Comment > p {
+  margin: 0;
+  grid-column: 1 / -1;
+}

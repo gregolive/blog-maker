@@ -24,6 +24,10 @@
   margin-top: 1rem;
 }
 
+.SeeAllLink {
+  grid-column: 1 / -1;
+}
+
 @media screen and (max-width: 1024px) {
   .PostGrid {
     grid-template-columns: repeat(2, 1fr);

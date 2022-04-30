@@ -36,7 +36,6 @@ const Header = () => {
       {(token) ? (
         <div className={(menu) ? 'NavbarMenu Open' : 'NavbarMenu Close'}>
           <Link to='/post/new' onClick={closeMenu} className='NavbarLink'>New Post</Link>
-          <Link to='/dashboard' onClick={closeMenu} className='NavbarLink'>Dashboard</Link>
           <Link to='/' onClick={closeMenu} className='NavbarLink'>Account</Link>
           <button type='button' onClick={logout} className='NavbarLink'>Sign Out</button>
         </div>

@@ -37,9 +37,9 @@ const Dashboard = () => {
                   <p>{post.preview}</p>
                 ) : null}
                 <Link to={post.url} className='InlineLink'>Read more</Link>
-                
               </div>
             )}
+            <Link to='/posts' className='InlineLink SeeAllLink'>See all posts</Link>
           </section>
         </>
       ) : (
