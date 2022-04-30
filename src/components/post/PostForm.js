@@ -84,7 +84,7 @@ const PostForm = () => {
         </fieldset>
 
         <fieldset>
-          <label htmlFor='preview'>Preview</label>
+          <label htmlFor='preview' className='RequiredField'>Preview</label>
           <textarea name='preview' id='preview' className='DynamicInput PostInput' rows='5' maxLength='200' value={postData.preview} onChange={(e) => handleChange(e)} />
         </fieldset>
 
@@ -100,7 +100,7 @@ const PostForm = () => {
 
         <div className='ButtonGroup'>
           <button className='Btn PrimaryBtn'>Create</button>
-          <Link to='/' className='Btn SecondaryBtn'>Cancel</Link>
+          <Link to='/dashboard' className='Btn SecondaryBtn'>Cancel</Link>
         </div>
       </form>
     </main>
