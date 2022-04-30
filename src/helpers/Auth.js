@@ -70,7 +70,6 @@ const ProtectedRoute = ({ children }) => {
   const { token } = useAuth();
   
   if (!token) {
-    console.log(token)
     return <Navigate to='/login' replace />;
   }
   return children;

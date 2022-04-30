@@ -1,4 +1,4 @@
-.PostInput {
+.PostForm > * input, .PostInput {
   background: white;
   border: 2px solid var(--border-color);
 }
