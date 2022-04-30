@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { format, parseISO } from 'date-fns';
 import './Dashboard.css';
 import { useAuth } from '../../helpers/Auth';
 
@@ -13,22 +14,32 @@ const Dashboard = () => {
     const apiURL = `http://localhost:3001/api/v1/post/all/${user._id}`;
   
     axios.get(apiURL).then(
-      (data) => setRecentPosts(data), 
+      (res) => setRecentPosts(res.data.posts), 
       (err) => console.log(err)
     );
   }, [user]);
-
-  console.log(recentPosts)
 
   return (
     <main>
       <h1>Welcome back {user.name}!</h1>
 
-      {(recentPosts.length > 1) ? (
+      {(recentPosts.length > 0) ? (
         <>
-          <Link to='/post/new' className='InlineLink'>+ Create a new post</Link>
-          <section>
-            <h2>Your recent posts</h2>
+          <Link to='/post/new' className='InlineLink'>+ Create new post</Link>
+          <h2>Your recent posts</h2>
+
+          <section className='PostGrid'>
+            {recentPosts.map((post, index) =>
+              <div className='PostCard' key={index}>
+                <h3>{post.title}</h3>
+                <small>{post.author.first_name} {post.author.last_name} · {format(parseISO(post.created_at), 'MMMM dd, yyyy')}</small>
+                {(post.preview) ? (
+                  <p>{post.preview}</p>
+                ) : null}
+                <Link to={post.url} className='InlineLink'>Read more</Link>
+                
+              </div>
+            )}
           </section>
         </>
       ) : (

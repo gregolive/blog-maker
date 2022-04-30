@@ -1,0 +1,37 @@
+.PostGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.PostCard {
+  border: 1px solid black;
+  box-shadow: 5px 5px 0 black;
+  padding: 1rem;
+  display: grid;
+  transition: all 0.4s ease;
+}
+
+.PostCard:hover {
+  box-shadow: 2px 2px 0 black;
+}
+
+.PostCard > p {
+  margin-bottom: 0;
+}
+
+.PostCard > .InlineLink {
+  margin-top: 1rem;
+}
+
+@media screen and (max-width: 1024px) {
+  .PostGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .PostGrid {
+    grid-template-columns: 1fr;
+  }
+}

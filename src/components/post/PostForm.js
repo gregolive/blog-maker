@@ -19,11 +19,11 @@ const PostForm = () => {
     axios.post(apiURL, {
       title,
       content,
-      author: user.id,
+      author: user._id,
       preview,
       visibility,
     }).then((res) => {
-      navigate(`/post/${res.data.url}`, { state: res.data.post });
+      navigate(res.data.post.url, { state: 'Blog post created! 🙌' });
     }, (err) => {
       console.log(err);
     });

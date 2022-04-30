@@ -21,6 +21,10 @@ h1 {
   margin-top: 0;
 }
 
+h3 {
+  margin: 0;
+}
+
 form {
   display: grid;
   gap: 1rem;
