@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
-import { AuthProvider, ProtectedRoute } from './helpers/Auth';
+import { AuthProvider, ProtectedRoute, UnauthenticatedRoute } from './helpers/Auth';
 import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
 import Home from './components/home/Home';
@@ -17,8 +17,12 @@ const App = () => {
         <Header />
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/register' element={<Register />} />
-          <Route path='/login' element={<Login />} />
+          <Route
+            path='/register'
+            element={<UnauthenticatedRoute><Register /></UnauthenticatedRoute>} />
+          <Route 
+            path='/login'
+            element={<UnauthenticatedRoute><Login /></UnauthenticatedRoute>} />
           <Route 
             path='/dashboard' 
             element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />

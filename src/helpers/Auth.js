@@ -1,19 +1,27 @@
 import { useState, createContext, useContext, useEffect } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
-  const [token, setToken] = useState(null);
-  const [user, setUser] = useState(null);
+  const location = useLocation();
+  const [token, setToken] = useState(localStorage.getItem('token'));
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
   const [authError, setAuthError] = useState(null);
 
   // navigate when token updates
   useEffect(() => {
-    navigate('/dashboard'); // eslint-disable-next-line
+    navigate(location.pathname); // eslint-disable-next-line
   }, [token]);
+
+  const setAuthData = (data) => {
+    setToken(data.token);
+    setUser(data.user);
+    localStorage.setItem('token', data.token);
+    localStorage.setItem('user', JSON.stringify(data.user));
+  };
 
   const authRequest = async (username, password) => {
     const apiURL = 'http://localhost:3001/api/v1/login';
@@ -22,8 +30,7 @@ const AuthProvider = ({ children }) => {
       username,
       password,
     }).then((res) => {
-      setToken(res.data.token);
-      setUser(res.data.user);
+      setAuthData(res.data);
     }, (err) => {
       setAuthError(err.response.data.message.message);
     });
@@ -35,6 +42,9 @@ const AuthProvider = ({ children }) => {
 
   const handleLogout = () => {
     setToken(null);
+    setUser(null);
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
   };
 
   const value = {
@@ -58,12 +68,21 @@ const useAuth = () => {
 
 const ProtectedRoute = ({ children }) => {
   const { token } = useAuth();
-
+  
   if (!token) {
+    console.log(token)
     return <Navigate to='/login' replace />;
   }
-
   return children;
 };
 
-export { AuthProvider, useAuth, ProtectedRoute };
+const UnauthenticatedRoute = ({ children }) => {
+  const { token } = useAuth();
+  
+  if (token) {
+    return <Navigate to='/dashboard' replace />;
+  }
+  return children;
+};
+
+export { AuthProvider, useAuth, ProtectedRoute, UnauthenticatedRoute };

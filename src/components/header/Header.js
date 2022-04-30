@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import './Header.css';
 import { useAuth } from '../../helpers/Auth';
 import logo from '../../img/logo.png';
@@ -18,15 +18,15 @@ const Header = () => {
   return (
     <nav className='Navbar'>
       {(token) ? (
-        <Link to='/dashboard' className='NavbarTitle'>
+        <NavLink to='/dashboard' className='NavbarTitle'>
           <img src={logo} alt='bitblog logo' />
           <span>bitblog</span>
-        </Link>
+        </NavLink>
       ) : (
-        <Link to='/' className='NavbarTitle'>
+        <NavLink to='/' className='NavbarTitle'>
           <img src={logo} alt='bitblog logo' />
           <span>bitblog</span>
-        </Link>
+        </NavLink>
       )}
 
       <button className='NavbarBurger' onClick={toggleMenu}>
@@ -35,14 +35,14 @@ const Header = () => {
 
       {(token) ? (
         <div className={(menu) ? 'NavbarMenu Open' : 'NavbarMenu Close'}>
-          <Link to='/post/new' onClick={closeMenu} className='NavbarLink'>New Post</Link>
-          <Link to='/' onClick={closeMenu} className='NavbarLink'>Account</Link>
+          <NavLink to='/post/new' onClick={closeMenu} className='NavbarLink'>New Post</NavLink>
+          <NavLink to='/' onClick={closeMenu} className='NavbarLink'>Account</NavLink>
           <button type='button' onClick={logout} className='NavbarLink'>Sign Out</button>
         </div>
       ) : (
         <div className={(menu) ? 'NavbarMenu Open' : 'NavbarMenu Close'}>
-          <Link to='/register' onClick={closeMenu} className='NavbarLink'>Register</Link>
-          <Link to='/login' onClick={closeMenu} className='NavbarLink'>Log in</Link>
+          <NavLink to='/register' onClick={closeMenu} className='NavbarLink'>Register</NavLink>
+          <NavLink to='/login' onClick={closeMenu} className='NavbarLink'>Log in</NavLink>
         </div>
       )}
     </nav>
