@@ -19,7 +19,6 @@ const Dashboard = () => {
     axios.get(apiURL).then(
       (res) => {
         const posts = res.data.posts;
-        console.log(posts);
         setRecentPosts(posts.filter((post) => post.author._id === user._id).slice(0, 3));
         setExplorePosts(posts.filter((post) => post.author._id !== user._id).slice(0, 4));
       }, 
