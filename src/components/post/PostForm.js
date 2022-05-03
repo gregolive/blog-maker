@@ -1,24 +1,28 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Editor } from '@tinymce/tinymce-react';
 import axios from 'axios';
+import parse from 'html-react-parser';
 import './Post.css';
 import { useAuth } from '../../helpers/Auth';
 import InputWithValidator from '../../helpers/Validate';
 
-const PostForm = () => {
+const PostForm = ({ title, location }) => {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const post = useLocation();
   const [postData, setPostData] = useState({
-    title: '',
-    content: '',
-    preview: '',
-    visibility: 'Visible',
+    title: post.state.title || '',
+    content: parse(post.state.content) || '',
+    preview: post.state.preview || '',
+    visibility: post.state.visibility || 'Visible',
   });
   const [submitError, setSubmitError] = useState(false);
 
+  console.log(post)
+
   const formSubmit = () => {
-    const apiURL = 'http://localhost:3001/api/v1/post/create';
+    const apiURL = (post) ? 'http://localhost:3001/api/v1/post/create' : `http://localhost:3001/api/v1/post/${post._id}/update`;
 
     axios.post(apiURL, {
       title: postData.title,
@@ -27,7 +31,7 @@ const PostForm = () => {
       preview: postData.preview,
       visibility: postData.visibility,
     }).then((res) => {
-      navigate(res.data.post.url, { state: 'Blog post created! 🙌' });
+      navigate(res.data.post.url, { state: (post) ? 'Blog post updated! 👍' : 'Blog post created! 🙌' });
     }, (err) => {
       console.log(err);
     });
@@ -49,7 +53,7 @@ const PostForm = () => {
 
   return (
     <main>
-      <h1>New blog post</h1>
+      <h1>{title}</h1>
 
       <form onSubmit={(e) => handleSubmit(e)} className='PostForm'>
         <InputWithValidator
@@ -99,7 +103,7 @@ const PostForm = () => {
         <p className={(submitError) ? 'Error' : 'Error Hidden'}>Please complete required fields</p>
 
         <div className='ButtonGroup'>
-          <button className='Btn PrimaryBtn'>Create</button>
+          <button className='Btn PrimaryBtn'>Submit</button>
           <Link to='/dashboard' className='Btn SecondaryBtn'>Cancel</Link>
         </div>
       </form>

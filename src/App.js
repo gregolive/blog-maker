@@ -19,19 +19,28 @@ const App = () => {
           <Route path='/' element={<Home />} />
           <Route
             path='/register'
-            element={<UnauthenticatedRoute><Register /></UnauthenticatedRoute>} />
+            element={<UnauthenticatedRoute><Register /></UnauthenticatedRoute>}
+          />
           <Route 
             path='/login'
-            element={<UnauthenticatedRoute><Login /></UnauthenticatedRoute>} />
+            element={<UnauthenticatedRoute><Login /></UnauthenticatedRoute>}
+          />
           <Route 
             path='/dashboard' 
-            element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+            element={<ProtectedRoute><Dashboard /></ProtectedRoute>}
+          />
           <Route 
             path='/post/new' 
-            element={<ProtectedRoute><PostForm /></ProtectedRoute>} />
+            element={<ProtectedRoute><PostForm title='New blog post' /></ProtectedRoute>}
+          />
           <Route 
             path='/post/:postTitle' 
-            element={<ProtectedRoute><PostDetail /></ProtectedRoute>} />
+            element={<ProtectedRoute><PostDetail /></ProtectedRoute>}
+          />
+          <Route 
+            path='/post/:postTitle/edit' 
+            element={<ProtectedRoute><PostForm title='Edit blog post' /></ProtectedRoute>}
+          />
         </Routes>
         <Footer />
       </AuthProvider>
