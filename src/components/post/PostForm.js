@@ -11,18 +11,21 @@ const PostForm = ({ title, location }) => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const post = useLocation();
-  const [postData, setPostData] = useState({
-    title: post.state.title || '',
-    content: parse(post.state.content) || '',
-    preview: post.state.preview || '',
-    visibility: post.state.visibility || 'Visible',
+  const [postData, setPostData] = useState((post.state) ? {
+    title: post.state.title,
+    content: parse(post.state.content),
+    preview: post.state.preview,
+    visibility: post.state.visibility,
+  } : {
+    title: '',
+    content: '',
+    preview: '',
+    visibility: 'Visible',
   });
   const [submitError, setSubmitError] = useState(false);
 
-  console.log(post)
-
   const formSubmit = () => {
-    const apiURL = (post) ? 'http://localhost:3001/api/v1/post/create' : `http://localhost:3001/api/v1/post/${post._id}/update`;
+    const apiURL = (post.state) ? `http://localhost:3001/api/v1/post/${post.state._id}/update` : 'http://localhost:3001/api/v1/post/create';
 
     axios.post(apiURL, {
       title: postData.title,
@@ -31,7 +34,7 @@ const PostForm = ({ title, location }) => {
       preview: postData.preview,
       visibility: postData.visibility,
     }).then((res) => {
-      navigate(res.data.post.url, { state: (post) ? 'Blog post updated! 👍' : 'Blog post created! 🙌' });
+      navigate(res.data.post.url, { state: (post.state) ? 'Blog post updated! 👍' : 'Blog post created! 🙌' });
     }, (err) => {
       console.log(err);
     });
