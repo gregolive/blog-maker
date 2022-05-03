@@ -7,7 +7,7 @@ import './Post.css';
 import { useAuth } from '../../helpers/Auth';
 import InputWithValidator from '../../helpers/Validate';
 
-const PostForm = ({ title, location }) => {
+const PostForm = ({ title }) => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const post = useLocation();

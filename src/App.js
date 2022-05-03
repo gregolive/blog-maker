@@ -9,6 +9,7 @@ import Register from './components/auth/Register';
 import Dashboard from './components/dashboard/Dashboard';
 import PostForm from './components/post/PostForm';
 import PostDetail from './components/post/PostDetail';
+import PostDelete from './components/post/PostDelete';
 
 const App = () => {
   return (
@@ -40,6 +41,10 @@ const App = () => {
           <Route 
             path='/post/:postTitle/edit' 
             element={<ProtectedRoute><PostForm title='Edit blog post' /></ProtectedRoute>}
+          />
+          <Route 
+            path='/post/:postTitle/delete' 
+            element={<ProtectedRoute><PostDelete /></ProtectedRoute>}
           />
         </Routes>
         <Footer />
