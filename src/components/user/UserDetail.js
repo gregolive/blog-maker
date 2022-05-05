@@ -4,6 +4,7 @@ import axios from 'axios';
 import './User.css';
 import { useAuth } from '../../helpers/Auth';
 import Loading from '../loading/Loading';
+import ServerError from '../error/ServerError';
 import PostCard from '../post/PostCard';
 import doodle from '../../img/DancingDoodle.png';
 
@@ -11,6 +12,7 @@ const PostForm = () => {
   const { user } = useAuth();
   const userMsg = useLocation();
   const [showMsg, setShowMsg] = useState(true);
+  const [serverError, setServerError] = useState(false);
   const [postCount, setPostCount] = useState(null);
   const [recentPosts, setRecentPosts] = useState([]);
 
@@ -24,7 +26,7 @@ const PostForm = () => {
         setRecentPosts(res.data.recent_posts);
         console.log(res.data.post_count)
       },
-      (err) => console.log(err)
+      (err) => setServerError(err)
     );
   }, [user]);
 
@@ -82,7 +84,7 @@ const PostForm = () => {
 
         <img src={doodle} alt='dancing doodle' />
       </main>
-    </>) : <Loading />
+    </>) : ((serverError) ? <ServerError error={serverError} /> : <Loading />)
   );
 };
 

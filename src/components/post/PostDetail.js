@@ -6,12 +6,14 @@ import parse from 'html-react-parser';
 import './Post.css';
 import { useAuth } from '../../helpers/Auth';
 import Loading from '../loading/Loading';
+import ServerError from '../error/ServerError';
 
 const PostForm = () => {
   const { postTitle } = useParams();
   const { user } = useAuth();
   const postMsg = useLocation();
   const [showMsg, setShowMsg] = useState(true);
+  const [serverError, setServerError] = useState(false);
   const [post, setPost] = useState({});
   const [comments, setComments] = useState([]);
 
@@ -24,7 +26,7 @@ const PostForm = () => {
         setPost(res.data.post);
         setComments(res.data.comments);
       },
-      (err) => console.log(err)
+      (err) => setServerError(err)
     );
   }, [postTitle]);
 
@@ -74,7 +76,7 @@ const PostForm = () => {
           </section>
         </section>
       </main>
-    </>) : <Loading />
+    </>) : ((serverError) ? <ServerError error={serverError} /> : <Loading />)
   );
 };
 

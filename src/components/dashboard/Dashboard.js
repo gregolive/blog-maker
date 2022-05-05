@@ -26,13 +26,11 @@ const Dashboard = () => {
         setRecentPosts(posts.filter((post) => post.author._id === user._id).slice(0, 3));
         setExplorePosts(posts.filter((post) => post.author._id !== user._id).slice(0, 4));
       }, 
-      (err) => {
-        console.log(err)
-        setServerError(err)}
+      (err) => setServerError(err)
     );
   }, [user]);
 
-  return (explorePosts.length > 0) ? (
+  return ((explorePosts.length > 0) ? (
     <>
       {(dashboardMsg.state && showMsg) ? (
         <div className='WelcomeMsg'>
@@ -86,7 +84,8 @@ const Dashboard = () => {
           </div>
         </section>
       </main>
-    </>) : ((serverError) ? <ServerError error={serverError} /> : <Loading />);
+    </>) : ((serverError) ? <ServerError error={serverError} /> : <Loading />)
+  );
 };
 
 export default Dashboard;
