@@ -11,6 +11,7 @@ import UserDetail from './components/user/UserDetail';
 import PostForm from './components/post/PostForm';
 import PostDetail from './components/post/PostDetail';
 import PostDelete from './components/post/PostDelete';
+import NotFound from './components/error/NotFound';
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
       <AuthProvider>
         <Header />
         <Routes>
+          <Route path='*' element={<NotFound />} />
           <Route path='/' element={<Home />} />
           <Route
             path='/register'

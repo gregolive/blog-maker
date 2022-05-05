@@ -59,7 +59,7 @@ const PostForm = () => {
         </section>
 
         <section className='UserPosts'>
-          <h2>Your posts</h2>
+          <h2>Blog posts</h2>
 
           {(postCount > 0) ? (
             <>

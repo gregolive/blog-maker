@@ -1,0 +1,27 @@
+.ErrorPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.ErrorPage > h1 {
+  font-size: 5rem;
+  margin-bottom: 0;
+}
+
+.ErrorPage > strong {
+  font-size: 1.25rem;
+}
+
+.ErrorPage > p {
+  margin-bottom: 0;
+}
+
+.ErrorPage > a {
+  margin-bottom: 2rem;
+}
+
+.ErrorPage > img {
+  width: min(30rem, 100%);
+}
