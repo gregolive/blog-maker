@@ -1,26 +1,26 @@
 import { Link } from 'react-router-dom';
 import './Error.css';
 import { useAuth } from '../../helpers/Auth';
-import doodle from '../../img/CoffeeDoodle.png';
+import doodle from '../../img/JumpingDoodle.png';
 
-const NotFound = () => {
+const ServerError = ({ error }) => {
   const { token } = useAuth();
 
   return (
     <main className='ErrorPage'>
-      <h1>404</h1>
-      <strong>Whoops! Page not found.</strong>
+      <h1 className='ServerError'>{error.message}</h1>
+      <strong>Error code: {error.code}</strong>
       
-      <p>Our devs must've forgotten their coffee this morning!</p>
+      <p>Please try again later.</p>
       {(token) ? (
         <Link to='/dashboard' className='Btn PrimaryBtn'>Back to home</Link>
       ) : (
         <Link to='/' className='Btn PrimaryBtn'>Back to home</Link>
       )}
 
-      <img src={doodle} alt='coffee doodle' />
+      <img src={doodle} alt='jumping doodle' />
     </main>
   );
 };
 
-export default NotFound;
+export default ServerError;

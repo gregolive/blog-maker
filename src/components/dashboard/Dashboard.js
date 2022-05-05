@@ -4,6 +4,7 @@ import axios from 'axios';
 import './Dashboard.css';
 import { useAuth } from '../../helpers/Auth';
 import Loading from '../loading/Loading';
+import ServerError from '../error/ServerError';
 import PostCard from '../post/PostCard';
 import doodle from '../../img/UnboxingDoodle.png';
 
@@ -11,6 +12,7 @@ const Dashboard = () => {
   const { user } = useAuth();
   const dashboardMsg = useLocation();
   const [showMsg, setShowMsg] = useState(true);
+  const [serverError, setServerError] = useState(false);
   const [recentPosts, setRecentPosts] = useState([]);
   const [explorePosts, setExplorePosts] = useState([]);
 
@@ -24,7 +26,9 @@ const Dashboard = () => {
         setRecentPosts(posts.filter((post) => post.author._id === user._id).slice(0, 3));
         setExplorePosts(posts.filter((post) => post.author._id !== user._id).slice(0, 4));
       }, 
-      (err) => console.log(err)
+      (err) => {
+        console.log(err)
+        setServerError(err)}
     );
   }, [user]);
 
@@ -82,7 +86,7 @@ const Dashboard = () => {
           </div>
         </section>
       </main>
-    </>) : (<Loading />);
+    </>) : ((serverError) ? <ServerError error={serverError} /> : <Loading />);
 };
 
 export default Dashboard;
