@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
-import { format, parseISO } from 'date-fns';
 import './Dashboard.css';
 import { useAuth } from '../../helpers/Auth';
 import Loading from '../loading/Loading';
+import PostCard from '../post/PostCard';
 import doodle from '../../img/UnboxingDoodle.png';
 
 const Dashboard = () => {
@@ -39,14 +39,14 @@ const Dashboard = () => {
         </div> 
       ) : null}
 
-      <main className='Dasboard'>
-        <div>
+      <main className='Dashboard'>
+        <section>
           <h1>Welcome back {user.name}!</h1>
           <div className='ButtonGroup'>
             <Link to='/post/new' className='Btn PrimaryBtn DashboardBtn'>+ Create new post</Link>
             <Link to={`/user/${user.username}/edit`} className='Btn SecondaryBtn DashboardBtn'>Update profile</Link>
           </div>
-        </div>
+        </section>
 
         {(recentPosts.length > 0) ? (
           <section>  
@@ -54,18 +54,11 @@ const Dashboard = () => {
 
             <div className='PostGrid'>
               {recentPosts.map((post, index) =>
-                <div className='PostCard' key={index}>
-                  <h3>{post.title}</h3>
-                  <small>{post.author.first_name} {post.author.last_name} · {format(parseISO(post.created_at), 'MMMM dd, yyyy')}</small>
-                  {(post.preview) ? (
-                    <p>{post.preview}</p>
-                  ) : null}
-                  <Link to={post.url} className='InlineLink'>Read more</Link>
-                </div>
+                <PostCard post={post} key={index} />
               )}
-              <Link to={`/posts/${user.username}`} className='InlineLink SeeAllLink'>
+              <Link to={`/posts/${user.username}`} className='InlineLink IconLink'>
                 See all posts
-                <svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='20' height='20' viewBox='0 0 24 24' fill='currentColor'><path d='M2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2A10,10 0 0,0 2,12M4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12M10,17L15,12L10,7V17Z' /></svg>
+                <svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='20' height='20' viewBox='0 0 24 24' fill='currentColor'><path d='M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z' /></svg>
               </Link>
             </div>
           </section>
@@ -79,19 +72,12 @@ const Dashboard = () => {
 
           <div className='ExploreGrid'>
             {explorePosts.map((post, index) =>
-              <div className='PostCard' key={index}>
-                <h3>{post.title}</h3>
-                <small>{post.author.first_name} {post.author.last_name} · {format(parseISO(post.created_at), 'MMMM dd, yyyy')}</small>
-                {(post.preview) ? (
-                  <p>{post.preview}</p>
-                ) : null}
-                <Link to={post.url} className='InlineLink'>Read more</Link>
-              </div>
+              <PostCard post={post} key={index} />
             )}
             <img src={doodle} alt='unboxing doodle' />
-            <Link to='/posts' className='InlineLink SeeAllLink'>
+            <Link to='/posts' className='InlineLink IconLink'>
               Explore posts
-              <svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='20' height='20' viewBox='0 0 24 24' fill='currentColor'><path d='M2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2A10,10 0 0,0 2,12M4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12M10,17L15,12L10,7V17Z' /></svg>
+              <svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='20' height='20' viewBox='0 0 24 24' fill='currentColor'><path d='M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z' /></svg>
             </Link>
           </div>
         </section>

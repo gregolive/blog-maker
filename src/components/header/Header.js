@@ -5,7 +5,7 @@ import { useAuth } from '../../helpers/Auth';
 import logo from '../../img/logo.png';
 
 const Header = () => {
-  const { token, onLogout } = useAuth();
+  const { token, user, onLogout } = useAuth();
   const [menu, setMenu] = useState(false);
 
   const toggleMenu = () => setMenu(!menu);
@@ -36,7 +36,7 @@ const Header = () => {
       {(token) ? (
         <div className={(menu) ? 'NavbarMenu Open' : 'NavbarMenu Close'}>
           <NavLink to='/post/new' onClick={closeMenu} className='NavbarLink'>New Post</NavLink>
-          <NavLink to='/' onClick={closeMenu} className='NavbarLink'>Account</NavLink>
+          <NavLink to={`/user/${user.username}`} onClick={closeMenu} className='NavbarLink'>Account</NavLink>
           <button type='button' onClick={logout} className='NavbarLink'>Sign Out</button>
         </div>
       ) : (

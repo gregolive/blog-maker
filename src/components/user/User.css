@@ -1,0 +1,32 @@
+.UserDetail {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 2rem;
+}
+
+.UserPosts {
+  grid-column: 1 / -1;
+}
+
+.UserDetail > img {
+  height: 17.5rem;
+  grid-row: 1 / 2;
+  grid-column: 2 / -1;
+  align-self: center;
+}
+
+@media screen and (max-width: 768px) {
+  .UserDetail {
+    padding: 3rem 2rem;
+    grid-template-columns: 1fr;
+    justify-items: stretch;
+  }
+
+  .UserDetail > img {
+    height: auto;
+    width: 100%;
+    justify-self: center;
+    grid-row: 3 / 4;
+    grid-column: 1 / -1;
+  }
+}

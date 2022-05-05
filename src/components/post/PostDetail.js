@@ -28,7 +28,7 @@ const PostForm = () => {
     );
   }, [postTitle]);
 
-  return (Object.keys(post).length > 0) ? (
+  return ((Object.keys(post).length > 0) ? (
     <>
       {(postMsg.state && showMsg) ? (
         <div className='WelcomeMsg'>
@@ -74,7 +74,8 @@ const PostForm = () => {
           </section>
         </section>
       </main>
-    </>) : (<Loading />);
+    </>) : <Loading />
+  );
 };
 
 export default PostForm;

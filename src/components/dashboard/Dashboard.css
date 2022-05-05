@@ -35,13 +35,6 @@
   justify-self: start;
 }
 
-.SeeAllLink {
-  grid-column: 1 / -1;
-  justify-self: start;
-  display: flex;
-  gap: 0.25rem;
-}
-
 .ExploreGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
