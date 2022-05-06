@@ -16,7 +16,7 @@ const Dashboard = () => {
   const [recentPosts, setRecentPosts] = useState([]);
   const [explorePosts, setExplorePosts] = useState([]);
 
-  // Fetch and post data
+  // Fetch post data
   useEffect(() => {
     const apiURL = 'http://localhost:3001/api/v1/post/all';
   

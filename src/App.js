@@ -13,6 +13,8 @@ import UserDelete from './components/user/UserDelete';
 import PostForm from './components/post/PostForm';
 import PostDetail from './components/post/PostDetail';
 import PostDelete from './components/post/PostDelete';
+import PostList from './components/post/PostList';
+import PostListUser from './components/post/PostListUser';
 import NotFound from './components/error/NotFound';
 
 const App = () => {
@@ -62,6 +64,14 @@ const App = () => {
           <Route 
             path='/post/:postTitle/delete' 
             element={<ProtectedRoute><PostDelete /></ProtectedRoute>}
+          />
+          <Route 
+            path='/posts' 
+            element={<ProtectedRoute><PostList /></ProtectedRoute>}
+          />
+          <Route 
+            path='/posts/:username' 
+            element={<ProtectedRoute><PostListUser /></ProtectedRoute>}
           />
         </Routes>
         <Footer />
