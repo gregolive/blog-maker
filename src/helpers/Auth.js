@@ -47,12 +47,18 @@ const AuthProvider = ({ children }) => {
     localStorage.removeItem('user');
   };
 
+  const handleUpdate = (user) => {
+    setUser(user);
+    localStorage.setItem('user', JSON.stringify(user));
+  };
+
   const value = {
     token,
     user,
     authError,
     onLogin: handleLogin,
     onLogout: handleLogout,
+    onUpdate: handleUpdate
   };
 
   return (

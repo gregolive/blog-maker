@@ -24,7 +24,6 @@ const PostForm = () => {
       (res) => {
         setPostCount(res.data.post_count);
         setRecentPosts(res.data.recent_posts);
-        console.log(res.data.post_count)
       },
       (err) => setServerError(err)
     );

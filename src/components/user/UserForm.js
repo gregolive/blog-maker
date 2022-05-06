@@ -1,36 +1,43 @@
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './Auth.css';
+import './User.css';
+import { useAuth } from '../../helpers/Auth';
 import ServerError from '../error/ServerError';
 import InputWithValidator from '../../helpers/Validate';
-import Doodle from '../../img/MessyDoodle.png';
+import Doodle from '../../img/MeditatingDoodle.png';
 
-const Register = () => {
+const UserForm = () => {
   const navigate = useNavigate();
+  const { user, onUpdate } = useAuth();
   const [serverError, setServerError] = useState(false);
   const [submitErrors, setSubmitErrors] = useState({});
   const [formError, setFormError] = useState(false);
   const [formData, setFormData] = useState({
-    username: '',
-    first_name: '',
-    last_name: '',
-    email: '',
-    password: '',
-    password_confirm: '',
+    username: user.username,
+    first_name: user.first_name,
+    last_name: user.last_name,
+    email: user.email,
+    current_password: '',
+    new_password: '',
+    new_password_confirm: '',
   });
 
   const formSubmit = () => {
-    const apiURL = 'http://localhost:3001/api/v1/user/create';
+    const apiURL = `http://localhost:3001/api/v1/user/${user._id}/update`;
 
     axios.post(apiURL, {
+      _id: user._id,
       username: formData.username,
       first_name: formData.first_name,
       last_name: formData.last_name,
       email: formData.email,
-      password: formData.password,
+      current_password: formData.current_password,
+      new_password: formData.new_password,
     }).then((res) => {
-      navigate('/login', { state: res.data.msg });
+      console.log(res.data.updated_user)
+      onUpdate(res.data.updated_user);
+      navigate(`/user/${user.username}`, { state: res.data.msg });
     }, (err) => {
       if (err.response.status === 400) {
         setSubmitErrors(err.response.data.errors);
@@ -40,9 +47,16 @@ const Register = () => {
     });
   };
 
+  const checkForm = () => {
+    if (formData.new_password === '') {
+      return !(Object.values(formData).some((input, index) => input === '' && index < 5));
+    }
+    return !(Object.values(formData).some((input) => input === ''));
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const validForm = !(Object.values(formData).some((input) => input === ''));
+    const validForm = checkForm();
     if (validForm) {
       setFormError(false);
       formSubmit();
@@ -71,7 +85,7 @@ const Register = () => {
   return ((serverError) ? <ServerError error={serverError} /> : (
     <main className='AuthSection'>
       <div className='AuthForm'>
-        <h1>Create an account</h1>
+        <h1>Update account details</h1>
 
         <form onSubmit={(e) => handleSubmit(e)} noValidate>
           <InputWithValidator
@@ -124,9 +138,9 @@ const Register = () => {
 
           <InputWithValidator
             required={true}
-            labelText='Password'
+            labelText='Current Password'
             inputProps={{ type:'password', autoComplete:'on', minLength:'6', pattern:'(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{6,}' }}
-            id='password'  
+            id='current_password'  
             checks={['tooShort', 'patternMismatch']}
             errorMessage='Password must be at least than 6 characters long and contain an uppercase letter, number, and special character'
             value={formData.password} 
@@ -135,13 +149,23 @@ const Register = () => {
           />
 
           <InputWithValidator
-            required={true}
-            labelText='Password Confirmation'
-            inputProps={{ type:'password', autoComplete:'on', pattern:`${formData.password}` }}
-            id='password_confirm'  
+            labelText='New Password'
+            inputProps={{ type:'password', autoComplete:'off', minLength:'6', pattern:'(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{6,}' }}
+            id='new_password'  
+            checks={['tooShort', 'patternMismatch']}
+            errorMessage='Password must be at least than 6 characters long and contain an uppercase letter, number, and special character'
+            value={formData.new_password} 
+            onChange={(e) => handleChange(e)}
+            serverError={submitErrors['password']}
+          />
+
+          <InputWithValidator
+            labelText='New Password Confirmation'
+            inputProps={{ type:'password', autoComplete:'off', pattern:`${formData.new_password}` }}
+            id='new_password_confirm'  
             checks={['valueMissing', 'patternMismatch']}
             errorMessage='Passwords must match'
-            value={formData.password_confirm} 
+            value={formData.new_password_confirm} 
             onChange={(e) => handleChange(e)}
           />
 
@@ -152,12 +176,12 @@ const Register = () => {
           </div>
         </form>
 
-        <p>Already have an account? <Link to='/login' className='InlineLink'>Log in</Link></p>
+        <p>Please enter current password to confirm any changes.</p>
       </div>
 
-      <img src={Doodle} alt='messy doodle' className='AuthDoodle' />
+      <img src={Doodle} alt='meditating doodle' className='AuthDoodle' />
     </main>
   ));
 };
 
-export default Register;
+export default UserForm;

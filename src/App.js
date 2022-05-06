@@ -8,6 +8,7 @@ import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Dashboard from './components/dashboard/Dashboard';
 import UserDetail from './components/user/UserDetail';
+import UserForm from './components/user/UserForm';
 import UserDelete from './components/user/UserDelete';
 import PostForm from './components/post/PostForm';
 import PostDetail from './components/post/PostDetail';
@@ -37,6 +38,10 @@ const App = () => {
           <Route 
             path='/user/:username' 
             element={<ProtectedRoute><UserDetail /></ProtectedRoute>}
+          />
+          <Route 
+            path='/user/:username/edit' 
+            element={<ProtectedRoute><UserForm /></ProtectedRoute>}
           />
           <Route 
             path='/user/:username/delete' 
