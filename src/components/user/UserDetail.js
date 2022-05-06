@@ -65,7 +65,7 @@ const PostForm = () => {
 
           {(postCount > 0) ? (
             <>
-              <p>You have made <strong>{postCount}</strong> blog posts.</p>
+              <p>You have made <strong>{postCount}</strong> blog {(postCount === 1) ? 'post' : 'posts'}.</p>
 
               <div className='PostGrid'>
                 {recentPosts.map((post, index) =>
