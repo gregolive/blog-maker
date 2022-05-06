@@ -1,18 +1,21 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './User.css';
 import { useAuth } from '../../helpers/Auth';
+import ServerError from '../error/ServerError';
 
 const UserDelete = () => {
   const { user, onLogout } = useAuth();
+  const [serverError, setServerError] = useState(false);
 
   const formSubmit = () => {
     const apiURL = `http://localhost:3001/api/v1/user/${user._id}/delete`;
 
     axios.post(apiURL).then(
       (res) => onLogout(),
-      (err) => console.log(err)
-      );
+      (err) => setServerError(err)
+    );
   };
 
   const handleSubmit = (e) => {
@@ -20,7 +23,7 @@ const UserDelete = () => {
     formSubmit();
   };
 
-  return (
+  return ((serverError) ? <ServerError error={serverError} /> : (
     <main>
       <h1>Delete account</h1>
 
@@ -34,7 +37,7 @@ const UserDelete = () => {
         </div>
       </form>
     </main>
-  ); 
+  )); 
 };
 
 export default UserDelete;

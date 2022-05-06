@@ -5,11 +5,14 @@ import axios from 'axios';
 import parse from 'html-react-parser';
 import './Post.css';
 import { useAuth } from '../../helpers/Auth';
+import ServerError from '../error/ServerError';
 import InputWithValidator from '../../helpers/Validate';
 
 const PostForm = ({ title }) => {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const [serverError, setServerError] = useState(false);
+  const [formError, setFormError] = useState(false);
   const post = useLocation();
   const [postData, setPostData] = useState((post.state) ? {
     title: post.state.title,
@@ -22,7 +25,6 @@ const PostForm = ({ title }) => {
     preview: '',
     visibility: 'Visible',
   });
-  const [submitError, setSubmitError] = useState(false);
 
   const formSubmit = () => {
     const apiURL = (post.state) ? `http://localhost:3001/api/v1/post/${post.state._id}/update` : 'http://localhost:3001/api/v1/post/create';
@@ -36,7 +38,7 @@ const PostForm = ({ title }) => {
     }).then((res) => {
       navigate(res.data.post.url, { state: (post.state) ? 'Blog post updated! 👍' : 'Blog post created! 🙌' });
     }, (err) => {
-      console.log(err);
+      setServerError(err);
     });
   };
 
@@ -44,17 +46,17 @@ const PostForm = ({ title }) => {
     e.preventDefault();
     const validForm = !(Object.values(postData).some((input) => input === ''));
     if (validForm) {
-      setSubmitError(false);
+      setFormError(false);
       formSubmit();
     } else {
-      setSubmitError(true);
+      setFormError(true);
     }
   };
 
   const handleChange = (e) => setPostData({ ...postData, [e.target.name]: e.target.value });
   const handleEditorChange = (e) => setPostData({ ...postData, 'content': e });
 
-  return (
+  return ((serverError) ? <ServerError error={serverError} /> : (
     <main>
       <h1>{title}</h1>
 
@@ -103,7 +105,7 @@ const PostForm = ({ title }) => {
           </select>
         </fieldset>
 
-        <p className={(submitError) ? 'Error' : 'Error Hidden'}>Please complete required fields</p>
+        <p className={(formError) ? 'Error' : 'Error Hidden'}>Please complete required fields</p>
 
         <div className='ButtonGroup'>
           <button className='Btn PrimaryBtn'>Submit</button>
@@ -111,7 +113,7 @@ const PostForm = ({ title }) => {
         </div>
       </form>
     </main>
-  ); 
+  ));
 };
 
 export default PostForm;

@@ -2,11 +2,15 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import './Auth.css';
+import ServerError from '../error/ServerError';
 import InputWithValidator from '../../helpers/Validate';
 import Doodle from '../../img/MessyDoodle.png';
 
 const Register = () => {
   const navigate = useNavigate();
+  const [serverError, setServerError] = useState(false);
+  const [submitErrors, setSubmitErrors] = useState({});
+  const [formError, setFormError] = useState(false);
   const [formData, setFormData] = useState({
     username: '',
     first_name: '',
@@ -15,8 +19,6 @@ const Register = () => {
     password: '',
     password_confirm: '',
   });
-  const [submitError, setSubmitError] = useState(false);
-  const [serverErrors, setServerErrors] = useState({});
 
   const formSubmit = () => {
     const apiURL = 'http://localhost:3001/api/v1/user/create';
@@ -30,7 +32,11 @@ const Register = () => {
     }).then((res) => {
       navigate('/login', { state: res.data.msg });
     }, (err) => {
-      setServerErrors(err.response.data.errors);
+      if (err.response.status === 400) {
+        setSubmitErrors(err.response.data.errors);
+      } else {
+        setServerError(err)
+      }
     });
   };
 
@@ -38,17 +44,17 @@ const Register = () => {
     e.preventDefault();
     const validForm = !(Object.values(formData).some((input) => input === ''));
     if (validForm) {
-      setSubmitError(false);
+      setFormError(false);
       formSubmit();
     } else {
-      setSubmitError(true);
+      setFormError(true);
     }
   };
 
   // remove server error msg when user updates field
   const removeServerError = (inputName) => {
-    if (Object.keys(serverErrors).includes(inputName)) {
-      setServerErrors((prevState) => {
+    if (Object.keys(submitErrors).includes(inputName)) {
+      setSubmitErrors((prevState) => {
         const updatedErrors = {...prevState};
         delete updatedErrors[inputName];
         return updatedErrors;
@@ -61,7 +67,7 @@ const Register = () => {
     removeServerError(e.target.name);
   };
 
-  return (
+  return ((serverError) ? <ServerError error={serverError} /> : (
     <main className='AuthSection'>
       <div className='AuthForm'>
         <h1>Create an account</h1>
@@ -76,7 +82,7 @@ const Register = () => {
             errorMessage='Username must be at least 5 characters long and contain no special characters'
             value={formData.username} 
             onChange={(e) => handleChange(e)}
-            serverError={serverErrors['username']}
+            serverError={submitErrors['username']}
           />
 
           <InputWithValidator
@@ -88,7 +94,7 @@ const Register = () => {
             errorMessage='First name cannot contain numbers or special characters'
             value={formData.first_name} 
             onChange={(e) => handleChange(e)}
-            serverError={serverErrors['first_name']}
+            serverError={submitErrors['first_name']}
           />
 
           <InputWithValidator
@@ -100,7 +106,7 @@ const Register = () => {
             errorMessage='Last name cannot contain numbers or special characters'
             value={formData.last_name} 
             onChange={(e) => handleChange(e)}
-            serverError={serverErrors['last_name']}
+            serverError={submitErrors['last_name']}
           />
 
           <InputWithValidator
@@ -112,7 +118,7 @@ const Register = () => {
             errorMessage='Must be a valid email address'
             value={formData.email} 
             onChange={(e) => handleChange(e)}
-            serverError={serverErrors['email']}
+            serverError={submitErrors['email']}
           />
 
           <InputWithValidator
@@ -124,7 +130,7 @@ const Register = () => {
             errorMessage='Password must be at least than 6 characters long and contain an uppercase letter, number, and special character'
             value={formData.password} 
             onChange={(e) => handleChange(e)}
-            serverError={serverErrors['password']}
+            serverError={submitErrors['password']}
           />
 
           <InputWithValidator
@@ -138,7 +144,7 @@ const Register = () => {
             onChange={(e) => handleChange(e)}
           />
 
-          <p className={(submitError) ? 'Error' : 'Error Hidden'}>Please complete required fields</p>
+          <p className={(formError) ? 'Error' : 'Error Hidden'}>Please complete required fields</p>
 
           <div className='ButtonGroup'>
             <button className='Btn PrimaryBtn'>Submit</button>
@@ -150,7 +156,7 @@ const Register = () => {
 
       <img src={Doodle} alt='messy doodle' className='AuthDoodle' />
     </main>
-  );
+  ));
 };
 
 export default Register;

@@ -1,19 +1,21 @@
+import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import './Post.css';
+import ServerError from '../error/ServerError';
 
 const PostDelete = () => {
   const navigate = useNavigate();
   const post = useLocation();
+  const [serverError, setServerError] = useState(false);
 
   const formSubmit = () => {
     const apiURL = `http://localhost:3001/api/v1/post/${post.state._id}/delete`;
 
-    axios.post(apiURL).then((res) => {
-      navigate('/dashboard', { state: res.data.msg });
-    }, (err) => {
-      console.log(err);
-    });
+    axios.post(apiURL).then(
+      (res) => navigate('/dashboard', { state: res.data.msg }),
+      (err) => setServerError(err)
+    );
   };
 
   const handleSubmit = (e) => {
@@ -21,7 +23,7 @@ const PostDelete = () => {
     formSubmit();
   };
 
-  return (
+  return ((serverError) ? <ServerError error={serverError} /> : (
     <main>
       <h1>Delete blog post</h1>
 
@@ -34,7 +36,7 @@ const PostDelete = () => {
         </div>
       </form>
     </main>
-  ); 
+  ));
 };
 
 export default PostDelete;

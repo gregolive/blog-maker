@@ -9,19 +9,19 @@ const Login = () => {
   const { authError, onLogin } = useAuth();
   const welcomeMsg = useLocation();
   const [showMsg, setShowMsg] = useState(true);
+  const [formError, setFormError] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [submitError, setSubmitError] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const validForm = (username.length >= 5 && password.length >= 6);
     if (validForm) {
-      setSubmitError(false);
+      setFormError(false);
       onLogin(username, password);
     } else {
-      setSubmitError(true);
+      setFormError(true);
     }
   };
 
@@ -49,7 +49,7 @@ const Login = () => {
               checks={['tooShort', 'patternMismatch']}
               errorMessage='Username must be at least 5 characters long and contain no special characters'
               value={username} 
-              onChange={(e) => {setUsername(e.target.value); setSubmitError(false); }}
+              onChange={(e) => {setUsername(e.target.value); setFormError(false); }}
             />
 
             <InputWithValidator
@@ -60,11 +60,11 @@ const Login = () => {
               checks={['tooShort', 'patternMismatch']}
               errorMessage='Password must be at least than 6 characters long and contain an uppercase letter, number, and special character'
               value={password} 
-              onChange={(e) => { setPassword(e.target.value); setSubmitError(false); }}
+              onChange={(e) => { setPassword(e.target.value); setFormError(false); }}
             />
 
-            <p className={(authError && !submitError) ? 'Error' : 'Error Hidden'}>{authError}</p>
-            <p className={(submitError) ? 'Error' : 'Error Hidden'}>Please complete required fields</p>
+            <p className={(authError && !formError) ? 'Error' : 'Error Hidden'}>{authError}</p>
+            <p className={(formError) ? 'Error' : 'Error Hidden'}>Please complete required fields</p>
 
             <div className='ButtonGroup'>
               <button className='Btn PrimaryBtn'>Submit</button>
