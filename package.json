@@ -2,6 +2,7 @@
   "name": "blog-platform",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://gregolive.github.io/blog-platform",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.1.1",
@@ -9,6 +10,7 @@
     "@tinymce/tinymce-react": "^4.0.0",
     "axios": "^0.27.1",
     "date-fns": "^2.28.0",
+    "gh-pages": "^3.2.3",
     "html-react-parser": "^1.4.12",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
@@ -18,6 +20,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
