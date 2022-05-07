@@ -54,6 +54,32 @@
   padding-left: 0.25rem;
 }
 
+.CommentForm {
+  position: relative;
+}
+
+.CommentInput {
+  background: white;
+  border: 1px solid black;
+  border-radius: 0;
+}
+
+.InlineBtn {
+  color: white;
+  background: var(--primary-color);
+  border-radius: 0;
+  padding: 0.4rem 0.5rem;
+  height: 32.3px;
+  position: absolute;
+  right: 1px;
+  bottom: 1px;
+}
+
+.InlineBtn:hover {
+  color: var(--primary-color);
+  background: var(--secondary-color);
+}
+
 .Comment {
   border: 1px solid black;
   box-shadow: 4px 4px 0 black;

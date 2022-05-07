@@ -108,7 +108,7 @@ const PostForm = ({ title }) => {
         <p className={(formError) ? 'Error' : 'Error Hidden'}>Please complete required fields</p>
 
         <div className='ButtonGroup'>
-          <button className='Btn PrimaryBtn'>Submit</button>
+          <button type='submit' className='Btn PrimaryBtn'>Submit</button>
           <Link to='/dashboard' className='Btn SecondaryBtn'>Cancel</Link>
         </div>
       </form>

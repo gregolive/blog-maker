@@ -154,6 +154,23 @@ ul {
   margin-bottom: 1rem;
 }
 
+.PopupMsg {
+  background: var(--secondary-color);
+  padding: 0.5rem 1rem;
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  text-align: center;
+}
+
+.PopupMsg > button {
+  height: 1rem;
+  color: black;
+  position: absolute;
+  top: 0;
+  right: 1rem;
+}
+
 @media screen and (max-width: 1024px) {
   .DynamicInput {
     width: auto;

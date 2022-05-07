@@ -15,6 +15,7 @@ const PostForm = () => {
   const [showMsg, setShowMsg] = useState(true);
   const [serverError, setServerError] = useState(false);
   const [post, setPost] = useState({});
+  const [newComment, setNewComment] = useState('');
   const [comments, setComments] = useState([]);
 
   // Fetch post data
@@ -30,10 +31,27 @@ const PostForm = () => {
     );
   }, [postTitle]);
 
+  const formSubmit = () => {
+    const apiURL = `http://localhost:3001/api/v1/post/${post._id}/comments/create`;
+
+    axios.post(apiURL, {
+      content: newComment,
+      user_id: user._id,
+    }).then((res) => {
+      setComments([res.data.comment, ...comments]);
+      setNewComment('');
+    }, (err) => setServerError(err));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (newComment !== '') { formSubmit(); }
+  };
+
   return ((Object.keys(post).length > 0) ? (
     <>
       {(postMsg.state && showMsg) ? (
-        <div className='WelcomeMsg'>
+        <div className='PopupMsg'>
           {postMsg.state}
           <button type='button' className='Btn' onClick={() => setShowMsg(false)}>
             <svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='24' height='24' viewBox='0 0 24 24' fill='currentColor'><path d='M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z' /></svg>
@@ -43,7 +61,7 @@ const PostForm = () => {
 
       <main>
         <section className='Post'>
-        {(user._id === post.author._id) ? (
+          {(user._id === post.author._id) ? (
             <div className='PostButtons'>
               <Link to={post.url + '/edit'} state={ post } className='Btn'>
                 <svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='18' height='18' viewBox='0 0 24 24' fill='currentColor'><path d='M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z' /></svg>
@@ -65,10 +83,20 @@ const PostForm = () => {
             <h2>Comments <span className='CommentCount'>{comments.length}</span></h2>
 
             <div className='CommentGrid'>
-              {comments.map((comment) =>
-                <div className='Comment'>
+              <form className='CommentForm' onSubmit={(e) => handleSubmit(e)}>
+                <fieldset>
+                  <label htmlFor='comment' />
+                  <input type='text' id='comment' name='comment' placeholder='Add comment' value={newComment} onChange={(e) => setNewComment(e.target.value)} className='CommentInput' />
+                </fieldset>
+                <button type='submit' className='Btn InlineBtn'>
+                <svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='20' height='20' viewBox='0 0 24 24' fill='currentColor'><path d='M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z' /></svg>
+                </button>
+              </form>
+
+              {comments.map((comment, index) =>
+                <div className='Comment' key={index}>
                   <strong>{comment.author.username}</strong>
-                  <small>{format(parseISO(comment.created_at), 'MMMM dd, yyyy')}</small>
+                  <small>{format(parseISO(comment.created_at), ' MMMM dd, yyyy hh:mm aa')}</small>
                   <p>{comment.content}</p>
                 </div>
               )}
