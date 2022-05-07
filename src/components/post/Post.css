@@ -63,6 +63,7 @@
   background: white;
   border: 1px solid black;
   border-radius: 0;
+  padding-right: 2.5rem;
 }
 
 .InlineBtn {
@@ -76,9 +77,14 @@
   bottom: 1px;
 }
 
-.InlineBtn:hover {
+.InlineBtn:hover, .CommentEditBtns > button:first-child:hover {
   color: var(--primary-color);
   background: var(--secondary-color);
+}
+
+.CommentEditBtns > button:not(:first-child):hover {
+  background: #c2c2c2;
+  color: white;
 }
 
 .Comment {
@@ -146,6 +152,34 @@
 
 .ModalBody > p {
   margin: 0;
+}
+
+.EditCommentForm {
+  gap: 0;
+}
+
+.EditCommentForm > * > input {
+  padding-right: 0.6rem;
+}
+
+.CommentEditBtns {
+  border: 1px solid black;
+  border-top: none;
+  justify-self: end;
+}
+
+.CommentEditBtns > button {
+  font-size: 1rem;
+  border-radius: 0;
+}
+
+.CommentEditBtns > button:first-child {
+  color: white;
+  background: var(--primary-color);
+}
+
+.CommentEditBtns > button:not(:first-child) {
+  background: var(--border-color);
 }
 
 @media screen and (max-width: 768px) {
