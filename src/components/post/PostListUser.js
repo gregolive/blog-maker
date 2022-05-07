@@ -13,7 +13,7 @@ const PostList = () => {
 
   // Fetch post data
   useEffect(() => {
-    const apiURL = `http://localhost:3001/api/v1/post/all/${username}`;
+    const apiURL = `https://bitblog-go.herokuapp.com/api/v1/post/all/${username}`;
   
     axios.get(apiURL).then(
       (res) => setPosts(res.data.posts), 

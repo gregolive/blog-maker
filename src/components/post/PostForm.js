@@ -27,7 +27,7 @@ const PostForm = ({ title }) => {
   });
 
   const formSubmit = () => {
-    const apiURL = (post.state) ? `http://localhost:3001/api/v1/post/${post.state._id}/update` : 'http://localhost:3001/api/v1/post/create';
+    const apiURL = (post.state) ? `https://bitblog-go.herokuapp.com/api/v1/post/${post.state._id}/update` : 'https://bitblog-go.herokuapp.com/api/v1/post/create';
 
     axios.post(apiURL, {
       title: postData.title,

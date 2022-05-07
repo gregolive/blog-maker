@@ -18,7 +18,7 @@ const PostForm = () => {
 
   // Fetch user post count
   useEffect(() => {
-    const apiURL = `http://localhost:3001/api/v1/user/${user._id}`;
+    const apiURL = `https://bitblog-go.herokuapp.com/api/v1/user/${user._id}`;
   
     axios.get(apiURL).then(
       (res) => {

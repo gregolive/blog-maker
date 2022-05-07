@@ -24,7 +24,7 @@ const AuthProvider = ({ children }) => {
   };
 
   const authRequest = async (username, password) => {
-    const apiURL = 'http://localhost:3001/api/v1/login';
+    const apiURL = 'https://bitblog-go.herokuapp.com/api/v1/login';
   
     axios.post(apiURL, {
       username,

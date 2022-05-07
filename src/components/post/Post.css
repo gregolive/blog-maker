@@ -35,6 +35,10 @@
   margin-bottom: 0.5rem;
 }
 
+.PostInfo {
+  margin-bottom: 1.5rem;
+}
+
 .PostBody {
   justify-self: start;
 }

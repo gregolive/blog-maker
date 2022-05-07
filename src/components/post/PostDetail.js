@@ -23,7 +23,7 @@ const PostForm = () => {
 
   // Fetch post data
   useEffect(() => {
-    const apiURL = `http://localhost:3001/api/v1/post/${postTitle}`;
+    const apiURL = `https://bitblog-go.herokuapp.com/api/v1/post/${postTitle}`;
   
     axios.get(apiURL).then(
       (res) => {
@@ -36,7 +36,7 @@ const PostForm = () => {
 
   // Create new comment
   const createFormSubmit = () => {
-    const apiURL = `http://localhost:3001/api/v1/post/${post._id}/comments/create`;
+    const apiURL = `https://bitblog-go.herokuapp.com/api/v1/post/${post._id}/comments/create`;
 
     axios.post(apiURL, {
       content: newComment,
@@ -121,7 +121,7 @@ const PostForm = () => {
           ) : null}
 
           <h1 className='PostTitle'>{post.title}</h1>
-          <small>{post.author.first_name} {post.author.last_name} · {format(parseISO(post.created_at), 'MMMM dd, yyyy')}</small>
+          <small className='PostInfo'>{post.author.first_name} {post.author.last_name} · {format(parseISO(post.created_at), 'MMMM dd, yyyy')}</small>
 
           <div className='PostBody'>{parse(parse(post.content))}</div>
 

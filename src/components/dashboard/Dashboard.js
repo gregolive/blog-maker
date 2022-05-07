@@ -18,7 +18,7 @@ const Dashboard = () => {
 
   // Fetch post data
   useEffect(() => {
-    const apiURL = 'http://localhost:3001/api/v1/post/all';
+    const apiURL = 'https://bitblog-go.herokuapp.com/api/v1/post/all';
   
     axios.get(apiURL).then(
       (res) => {

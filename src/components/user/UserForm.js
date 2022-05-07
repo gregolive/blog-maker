@@ -24,7 +24,7 @@ const UserForm = () => {
   });
 
   const formSubmit = () => {
-    const apiURL = `http://localhost:3001/api/v1/user/${user._id}/update`;
+    const apiURL = `https://bitblog-go.herokuapp.com/api/v1/user/${user._id}/update`;
 
     axios.post(apiURL, {
       _id: user._id,

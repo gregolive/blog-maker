@@ -21,7 +21,7 @@ const Register = () => {
   });
 
   const formSubmit = () => {
-    const apiURL = 'http://localhost:3001/api/v1/user/create';
+    const apiURL = 'https://bitblog-go.herokuapp.com/api/v1/user/create';
 
     axios.post(apiURL, {
       username: formData.username,

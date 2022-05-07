@@ -10,7 +10,7 @@ const UserDelete = () => {
   const [serverError, setServerError] = useState(false);
 
   const formSubmit = () => {
-    const apiURL = `http://localhost:3001/api/v1/user/${user._id}/delete`;
+    const apiURL = `https://bitblog-go.herokuapp.com/api/v1/user/${user._id}/delete`;
 
     axios.post(apiURL).then(
       (res) => onLogout(),
