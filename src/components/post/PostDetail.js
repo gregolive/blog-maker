@@ -17,6 +17,8 @@ const PostForm = () => {
   const [post, setPost] = useState({});
   const [newComment, setNewComment] = useState('');
   const [comments, setComments] = useState([]);
+  const [commentMsg, setCommentMsg] = useState(null);
+  const [markDelete, setMarkDelete] = useState(false);
 
   // Fetch post data
   useEffect(() => {
@@ -31,6 +33,7 @@ const PostForm = () => {
     );
   }, [postTitle]);
 
+  // Create new comment
   const formSubmit = () => {
     const apiURL = `http://localhost:3001/api/v1/post/${post._id}/comments/create`;
 
@@ -48,6 +51,17 @@ const PostForm = () => {
     if (newComment !== '') { formSubmit(); }
   };
 
+  // Delete comment
+  const handleDelete = () => {
+    const apiURL = `http://localhost:3001/api/v1/post/${post._id}/comments/${markDelete._id}/delete`;
+
+    axios.post(apiURL).then((res) => {
+      setComments(comments.filter((comment) => comment !== markDelete));
+      setCommentMsg(res.data.msg);
+      setMarkDelete(false);
+    }, (err) => setServerError(err));
+  };
+
   return ((Object.keys(post).length > 0) ? (
     <>
       {(postMsg.state && showMsg) ? (
@@ -59,15 +73,24 @@ const PostForm = () => {
         </div> 
       ) : null}
 
+      {(commentMsg) ? (
+        <div className='PopupMsg'>
+          {commentMsg}
+          <button type='button' className='Btn' onClick={() => setCommentMsg(null)}>
+            <svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='24' height='24' viewBox='0 0 24 24' fill='currentColor'><path d='M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z' /></svg>
+          </button>
+        </div> 
+      ) : null}
+
       <main>
         <section className='Post'>
           {(user._id === post.author._id) ? (
             <div className='PostButtons'>
-              <Link to={post.url + '/edit'} state={ post } className='Btn'>
+              <Link to={post.url + '/edit'} state={post} className='Btn'>
                 <svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='18' height='18' viewBox='0 0 24 24' fill='currentColor'><path d='M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z' /></svg>
                 Edit
               </Link>
-              <Link to={post.url + '/delete'} state={ post } className='Btn'>
+              <Link to={post.url + '/delete'} state={post} className='Btn'>
                 <svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='18' height='18' viewBox='0 0 24 24' fill='currentColor'><path d='M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z' /></svg>
                 Delete
               </Link>
@@ -96,14 +119,36 @@ const PostForm = () => {
               {comments.map((comment, index) =>
                 <div className='Comment' key={index}>
                   <strong>{comment.author.username}</strong>
-                  <small>{format(parseISO(comment.created_at), ' MMMM dd, yyyy hh:mm aa')}</small>
                   <p>{comment.content}</p>
+                  <small>
+                  {format(parseISO(comment.created_at), ' MMMM dd, yyyy hh:mm aa')}
+                    {(user._id === comment.author._id) ? (
+                      <div className='CommentButtons'>
+                        <button type='button' className='Btn'>
+                          <svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='18' height='18' viewBox='0 0 24 24' fill='currentColor'><path d='M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z' /></svg>
+                        </button>
+                        <button type='button' className='Btn' onClick={() => setMarkDelete(comment)}>
+                          <svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='18' height='18' viewBox='0 0 24 24' fill='currentColor'><path d='M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z' /></svg>
+                        </button>
+                      </div>
+                    ) : null}
+                  </small>
                 </div>
               )}
             </div>
           </section>
         </section>
       </main>
+
+      <div className={(markDelete) ? 'CommentModal' : 'CommentModal Hidden'}>
+        <section className='ModalBody'>
+          <p><strong>Are you sure you want to delete your comment?</strong></p>
+          <div className='ButtonGroup'>
+            <button className='Btn PrimaryBtn DashboardBtn' onClick={handleDelete}>Delete</button>
+            <button className='Btn SecondaryBtn DashboardBtn' onClick={() => setMarkDelete(false)}>Cancel</button>
+          </div>
+        </section>
+      </div>
     </>) : ((serverError) ? <ServerError error={serverError} /> : <Loading />)
   );
 };
