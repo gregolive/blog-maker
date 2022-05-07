@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/blog-platform/static/css/main.84b16e78.css",
+    "main.js": "/blog-platform/static/js/main.62077c57.js",
+    "static/media/MessyDoodle.png": "/blog-platform/static/media/MessyDoodle.7617ae7c4fc4b3b77b58.png",
+    "static/media/FloatDoodle.png": "/blog-platform/static/media/FloatDoodle.9506c9b627e20055f5e6.png",
+    "static/media/DancingDoodle.png": "/blog-platform/static/media/DancingDoodle.7bb72d61af1a5c65b066.png",
+    "static/media/UnboxingDoodle.png": "/blog-platform/static/media/UnboxingDoodle.8e2b87fc00c11278ef55.png",
+    "static/media/MeditatingDoodle.png": "/blog-platform/static/media/MeditatingDoodle.16a7297eeeb1871ed17a.png",
+    "static/media/CoffeeDoodle.png": "/blog-platform/static/media/CoffeeDoodle.58f87e281e8504ce0297.png",
+    "static/media/JumpingDoodle.png": "/blog-platform/static/media/JumpingDoodle.9f41c86b507fc04e87f1.png",
+    "static/media/GroovySittingDoodle.png": "/blog-platform/static/media/GroovySittingDoodle.8323e65166d3da09977c.png",
+    "static/media/logo.png": "/blog-platform/static/media/logo.56fe00b90432ac0e52b4.png",
+    "index.html": "/blog-platform/index.html",
+    "main.84b16e78.css.map": "/blog-platform/static/css/main.84b16e78.css.map",
+    "main.62077c57.js.map": "/blog-platform/static/js/main.62077c57.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.84b16e78.css",
+    "static/js/main.62077c57.js"
+  ]
+}
